@@ -26,4 +26,7 @@ No se suben secretos al repositorio. Antes de publicar, define:
 - `DJANGO_DEBUG=false`
 - `DJANGO_ALLOWED_HOSTS=your-domain.example`
 
+Para PythonAnywhere se debe usar una variable de entorno o el archivo WSGI
+para definir esos valores. No subas una clave de producción al repositorio.
+
 Las fotografías y el audio usados por la experiencia viven en `static/diario/`.
