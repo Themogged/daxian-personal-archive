@@ -1,0 +1,20 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <title>404 — {{ site.name }}</title>
+    <link rel="stylesheet" href="{% static 'diario/css/site.css' %}">
+  </head>
+  <body class="not-found">
+    <main>
+      <p class="eyebrow">ARCHIVE / LOST PAGE</p>
+      <h1>404</h1>
+      <p class="display-copy">This page became<br>a memory.</p>
+      <p class="korean">길을 잃었어요.</p>
+      <a class="text-link" href="{% url 'home' %}">BACK HOME <span aria-hidden="true">→</span></a>
+    </main>
+  </body>
+</html>
