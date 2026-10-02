@@ -134,8 +134,26 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
 
+# This archive does not initiate email. Keep useful console output locally and
+# use Django's production SMTP backend when an integration is added later.
 MAILERS = {
     'default': {
-        'BACKEND': 'django.core.mail.backends.console.EmailBackend',
+        'BACKEND': os.environ.get(
+            'DJANGO_MAIL_BACKEND',
+            'django.core.mail.backends.console.EmailBackend'
+            if DEBUG
+            else 'django.core.mail.backends.smtp.EmailBackend',
+        ),
     },
 }
+
+if not DEBUG:
+    # PythonAnywhere terminates HTTPS before passing the request to Django.
+    # Trust the forwarded scheme so secure cookies and redirects work correctly
+    # behind that proxy. A one-hour HSTS policy is a cautious first deployment
+    # value; it can be increased after the public domain has proven stable.
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 3600
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
