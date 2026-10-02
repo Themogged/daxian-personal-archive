@@ -27,6 +27,7 @@
         <span class="brand__descriptor">{{ site.descriptor }}</span>
       </a>
       <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="#letter">Letter</a>
         <a href="#journal">Journal</a>
         <a href="#photography">Photography</a>
         <a href="#archive">Archive</a>
@@ -42,22 +43,29 @@
     </header>
 
     <main id="main-content">
-      <section class="hero" id="top" aria-labelledby="hero-title">
-        <div class="hero__image-wrap">
-          <img src="{% static 'diario/images/5041922874431704504.jpg' %}" width="1024" height="1536" fetchpriority="high" alt="Portrait in a dark turtleneck near a shop aisle">
-        </div>
-        <div class="hero__overlay">
-          <p class="eyebrow">VISUAL JOURNAL / {{ site.year }}</p>
-          <h1 id="hero-title">Fragments<br>of a life.</h1>
-          <p class="hero__korean" lang="ko">나의 순간들을 기록합니다.</p>
-          <p class="hero__french">quelques souvenirs, quelques histoires.</p>
-          <a href="#journal" class="hero__explore">EXPLORE <span aria-hidden="true">↓</span></a>
-        </div>
-        <p class="hero__caption">PHOTO / 001 &nbsp;—&nbsp; a moment held in passing</p>
+      <section class="opening" id="top" aria-labelledby="letter-title">
+        <article class="letter opening__letter" id="letter">
+          <div class="letter__mark" aria-hidden="true">♥</div>
+          <p class="section-number">01 / LETTER</p>
+          <p class="letter__korean" lang="ko">마음에 남는 순간들</p>
+          <h1 id="letter-title">For the moments<br>that stay.</h1>
+          <div class="letter__body">
+            <p>Daxian,</p>
+            <p>Some moments seem small while they are happening, but later they stay with us in a way that is impossible to forget. A look, a laugh, a song, or simply being close can mean more than we first realize.</p>
+            <p>I love how easy it is to appreciate those moments with you. They do not have to be perfect or extraordinary; it is enough that they are ours. Thank you for making ordinary days feel soft and beautiful.</p>
+            <p>There are feelings I cannot always explain completely, but they are here: quiet, sincere, and present. I wanted to leave you these words so you know that every moment we share has a special place in my heart.</p>
+            <p class="letter__closing">This is with love, straight from me to you; simply, it is my heart.</p>
+          </div>
+          <p class="letter__french"><em>avec douceur, pour toi.</em></p>
+        </article>
+        <figure class="opening__image">
+          <img src="{% static 'diario/images/5041922874431704499.jpg' %}" width="1081" height="1458" fetchpriority="high" alt="Portrait holding a black rabbit plush toy">
+          <figcaption>PHOTO / 001 &nbsp;—&nbsp; held close</figcaption>
+        </figure>
       </section>
 
       <section class="statement section section--reading reveal" aria-labelledby="statement-title">
-        <p class="section-number">01 / NOTE</p>
+        <p class="section-number">02 / NOTE</p>
         <h2 id="statement-title">A place for the photographs, sounds and stories I don't want to lose.</h2>
         <p lang="ko">기억하고 싶은 모든 순간.</p>
       </section>
@@ -65,7 +73,7 @@
       <section class="section stories" id="journal" aria-labelledby="stories-title">
         <div class="section-heading reveal">
           <div>
-            <p class="section-number">02 / JOURNAL</p>
+            <p class="section-number">03 / JOURNAL</p>
             <h2 id="stories-title">Latest stories</h2>
           </div>
           <div class="section-heading__aside">
@@ -109,7 +117,7 @@
           <img src="{% static 'diario/images/5041922874431704499.jpg' %}" loading="lazy" width="1081" height="1458" alt="Portrait holding a black rabbit plush toy">
         </figure>
         <div class="featured__content">
-          <p class="section-number">03 / FEATURED STORY</p>
+          <p class="section-number">04 / FEATURED STORY</p>
           <p class="featured__issue">ARCHIVE / 01</p>
           <h2 id="featured-title">A day I want<br>to remember.</h2>
           <p class="featured__copy">A few objects, a familiar face, and the quiet proof that an ordinary afternoon can stay with us.</p>
@@ -125,7 +133,7 @@
       <section class="section photography" id="photography" aria-labelledby="photos-title">
         <div class="section-heading reveal">
           <div>
-            <p class="section-number">04 / PHOTOGRAPHY</p>
+            <p class="section-number">05 / PHOTOGRAPHY</p>
             <h2 id="photos-title">Photo journal</h2>
           </div>
           <div class="section-heading__aside">
@@ -141,92 +149,92 @@
           <button class="filter-button" type="button" data-filter="selected">Selected</button>
         </div>
         <div class="photo-grid" id="photo-grid">
-          <figure class="photo-item photo-item--tall" data-photo data-category="daily portrait" data-title="A bright aisle" data-caption="A bright aisle / personal archive / {{ site.year }}">
-            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704486.jpg' %}" loading="lazy" width="1079" height="1461" alt="Person holding two character plush toys in a toy shop"></button>
-            <figcaption>DAILY / 001 <span>A bright aisle</span></figcaption>
+          <figure class="photo-item photo-item--tall" data-photo data-category="portrait objects selected" data-title="Held close" data-caption="Held close / portrait with object / {{ site.year }}">
+            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704499.jpg' %}" loading="lazy" width="1081" height="1458" alt="Portrait holding a black rabbit plush toy"></button>
+            <figcaption>PORTRAIT / 001 <span>Held close</span></figcaption>
           </figure>
-          <figure class="photo-item photo-item--wide" data-photo data-category="portrait selected" data-title="Between the lights" data-caption="Between the lights / selected portrait / {{ site.year }}">
-            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704503.jpg' %}" loading="lazy" width="1084" height="1457" alt="Mirror portrait in a black turtleneck"></button>
-            <figcaption>PORTRAIT / 002 <span>Between the lights</span></figcaption>
+          <figure class="photo-item photo-item--medium" data-photo data-category="portrait selected" data-title="Light sweater, yellow wall" data-caption="Light sweater, yellow wall / portrait / {{ site.year }}">
+            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704505.jpg' %}" loading="lazy" width="1081" height="1456" alt="Portrait in a white turtleneck against a yellow wall"></button>
+            <figcaption>PORTRAIT / 002 <span>Light sweater, yellow wall</span></figcaption>
+          </figure>
+          <figure class="photo-item photo-item--wide" data-photo data-category="portrait selected" data-title="Light through a doorway" data-caption="Light through a doorway / selected portrait / {{ site.year }}">
+            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704487.jpg' %}" loading="lazy" width="1824" height="1368" alt="Low-light close portrait partly framed by a doorway"></button>
+            <figcaption>PORTRAIT / 003 <span>Light through a doorway</span></figcaption>
           </figure>
           <figure class="photo-item photo-item--square" data-photo data-category="objects selected" data-title="Rabbit, in black" data-caption="Rabbit, in black / object study / {{ site.year }}">
             <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704497.jpg' %}" loading="lazy" width="1254" height="1254" alt="Black rabbit plush with yellow scarf on a bed"></button>
-            <figcaption>OBJECT / 003 <span>Rabbit, in black</span></figcaption>
+            <figcaption>OBJECT / 004 <span>Rabbit, in black</span></figcaption>
           </figure>
           <figure class="photo-item photo-item--medium" data-photo data-category="portrait daily" data-title="Red in quiet rooms" data-caption="Red in quiet rooms / portrait / {{ site.year }}">
             <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704492.jpg' %}" loading="lazy" width="1082" height="1456" alt="Person in a red turtleneck against a stone wall"></button>
-            <figcaption>PORTRAIT / 004 <span>Red in quiet rooms</span></figcaption>
+            <figcaption>PORTRAIT / 005 <span>Red in quiet rooms</span></figcaption>
           </figure>
-          <figure class="photo-item photo-item--wide" data-photo data-category="objects daily" data-title="At the edge of the rain" data-caption="At the edge of the rain / visual study / {{ site.year }}">
-            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704498.jpg' %}" loading="lazy" width="1254" height="1254" alt="Illustrated orange cat looking out of a rainy window at night"></button>
-            <figcaption>STILL / 005 <span>At the edge of the rain</span></figcaption>
+          <figure class="photo-item photo-item--tall" data-photo data-category="daily portrait" data-title="An evening route" data-caption="An evening route / transit diary / {{ site.year }}">
+            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704500.jpg' %}" loading="lazy" width="1081" height="1457" alt="Portrait on public transit wearing a tan coat"></button>
+            <figcaption>DAILY / 006 <span>An evening route</span></figcaption>
           </figure>
           <figure class="photo-item photo-item--small" data-photo data-category="objects selected" data-title="A small bracelet" data-caption="A small bracelet / personal object / {{ site.year }}">
             <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704491.jpg' %}" loading="lazy" width="899" height="1599" alt="Pearl charm bracelet on a wrist"></button>
-            <figcaption>OBJECT / 006 <span>A small bracelet</span></figcaption>
+            <figcaption>OBJECT / 007 <span>A small bracelet</span></figcaption>
           </figure>
-          <figure class="photo-item photo-item--tall" data-photo data-category="portrait selected" data-title="Light sweater, yellow wall" data-caption="Light sweater, yellow wall / portrait / {{ site.year }}">
-            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704505.jpg' %}" loading="lazy" width="1081" height="1456" alt="Portrait in a white turtleneck against a yellow wall"></button>
-            <figcaption>PORTRAIT / 007 <span>Light sweater, yellow wall</span></figcaption>
+          <figure class="photo-item photo-item--tall" data-photo data-category="daily portrait" data-title="A bright aisle" data-caption="A bright aisle / personal archive / {{ site.year }}">
+            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704486.jpg' %}" loading="lazy" width="1079" height="1461" alt="Person holding two character plush toys in a toy shop"></button>
+            <figcaption>DAILY / 008 <span>A bright aisle</span></figcaption>
           </figure>
-          <figure class="photo-item photo-item--medium" data-photo data-category="daily portrait" data-title="An evening route" data-caption="An evening route / transit diary / {{ site.year }}">
-            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704500.jpg' %}" loading="lazy" width="1081" height="1457" alt="Portrait on public transit wearing a tan coat"></button>
-            <figcaption>DAILY / 008 <span>An evening route</span></figcaption>
+          <figure class="photo-item photo-item--medium" data-photo data-category="daily selected" data-title="Two small figures" data-caption="Two small figures / illustrated memory / {{ site.year }}">
+            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704494.jpg' %}" loading="lazy" width="1122" height="1416" alt="Pixel art of two figures in a green forest with hearts"></button>
+            <figcaption>VISUAL / 009 <span>Two small figures</span></figcaption>
+          </figure>
+          <figure class="photo-item photo-item--square" data-photo data-category="objects selected" data-title="At the edge of the rain" data-caption="At the edge of the rain / visual study / {{ site.year }}">
+            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704498.jpg' %}" loading="lazy" width="1254" height="1254" alt="Illustrated orange cat looking out of a rainy window at night"></button>
+            <figcaption>STILL / 010 <span>At the edge of the rain</span></figcaption>
+          </figure>
+          <figure class="photo-item photo-item--square" data-photo data-category="objects selected" data-title="Golden cat, open sky" data-caption="Golden cat, open sky / object study / {{ site.year }}">
+            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704490.jpg' %}" loading="lazy" width="1568" height="1568" alt="Orange cat looking toward the camera with blue water in the background"></button>
+            <figcaption>OBJECT / 011 <span>Golden cat, open sky</span></figcaption>
           </figure>
           <figure class="photo-item photo-item--small" data-photo data-category="objects daily" data-title="Soft toy, soft light" data-caption="Soft toy, soft light / object study / {{ site.year }}">
             <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704493.jpg' %}" loading="lazy" width="1152" height="2048" alt="Black rabbit plush in front of a blue curtain"></button>
-            <figcaption>OBJECT / 009 <span>Soft toy, soft light</span></figcaption>
+            <figcaption>OBJECT / 012 <span>Soft toy, soft light</span></figcaption>
           </figure>
-          <figure class="photo-item photo-item--square" data-photo data-category="daily selected" data-title="Two small figures" data-caption="Two small figures / illustrated memory / {{ site.year }}">
-            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704494.jpg' %}" loading="lazy" width="1122" height="1416" alt="Pixel art of two figures in a green forest with hearts"></button>
-            <figcaption>VISUAL / 010 <span>Two small figures</span></figcaption>
+          <figure class="photo-item photo-item--medium" data-photo data-category="objects selected" data-title="Rabbit, sleeping over" data-caption="Rabbit, sleeping over / object study / {{ site.year }}">
+            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704495.jpg' %}" loading="lazy" width="960" height="1280" alt="Black rabbit plush on a patterned bedspread"></button>
+            <figcaption>OBJECT / 013 <span>Rabbit, sleeping over</span></figcaption>
+          </figure>
+          <figure class="photo-item photo-item--tall" data-photo data-category="portrait selected" data-title="Between the lights" data-caption="Between the lights / selected portrait / {{ site.year }}">
+            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704503.jpg' %}" loading="lazy" width="1084" height="1457" alt="Mirror portrait in a black turtleneck"></button>
+            <figcaption>PORTRAIT / 014 <span>Between the lights</span></figcaption>
+          </figure>
+          <figure class="photo-item photo-item--medium" data-photo data-category="portrait daily" data-title="In front of the glass" data-caption="In front of the glass / daily portrait / {{ site.year }}">
+            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704502.jpg' %}" loading="lazy" width="1100" height="1467" alt="Person standing in front of a shop window wearing black"></button>
+            <figcaption>DAILY / 015 <span>In front of the glass</span></figcaption>
+          </figure>
+          <figure class="photo-item photo-item--tall" data-photo data-category="portrait daily" data-title="A black turtleneck" data-caption="A black turtleneck / portrait / {{ site.year }}">
+            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704504.jpg' %}" loading="lazy" width="1024" height="1536" alt="Person in a black turtleneck standing in a shop aisle"></button>
+            <figcaption>PORTRAIT / 016 <span>A black turtleneck</span></figcaption>
           </figure>
           <figure class="photo-item photo-item--medium" data-photo data-category="portrait daily" data-title="SpongeBob afternoon" data-caption="SpongeBob afternoon / portrait / {{ site.year }}">
             <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704501.jpg' %}" loading="lazy" width="1085" height="1454" alt="Portrait wearing a yellow SpongeBob paper crown"></button>
-            <figcaption>PORTRAIT / 011 <span>SpongeBob afternoon</span></figcaption>
-          </figure>
-          <figure class="photo-item photo-item--wide" data-photo data-category="objects selected" data-title="Rabbit, sleeping over" data-caption="Rabbit, sleeping over / object study / {{ site.year }}">
-            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704495.jpg' %}" loading="lazy" width="960" height="1280" alt="Black rabbit plush on a patterned bedspread"></button>
-            <figcaption>OBJECT / 012 <span>Rabbit, sleeping over</span></figcaption>
-          </figure>
-          <figure class="photo-item photo-item--medium" data-photo data-category="portrait selected" data-title="Light through a doorway" data-caption="Light through a doorway / portrait / {{ site.year }}">
-            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704487.jpg' %}" loading="lazy" width="1824" height="1368" alt="Low-light close portrait partly framed by a doorway"></button>
-            <figcaption>PORTRAIT / 013 <span>Light through a doorway</span></figcaption>
-          </figure>
-          <figure class="photo-item photo-item--wide" data-photo data-category="portrait selected" data-title="Small colored frames" data-caption="Small colored frames / visual collage / {{ site.year }}">
-            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704489.jpg' %}" loading="lazy" width="1024" height="1536" alt="Illustrated collage of a person in colorful shirts with a kitten"></button>
-            <figcaption>VISUAL / 014 <span>Small colored frames</span></figcaption>
-          </figure>
-          <figure class="photo-item photo-item--small" data-photo data-category="objects selected" data-title="Golden cat, open sky" data-caption="Golden cat, open sky / object study / {{ site.year }}">
-            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704490.jpg' %}" loading="lazy" width="1568" height="1568" alt="Orange cat looking toward the camera with blue water in the background"></button>
-            <figcaption>OBJECT / 015 <span>Golden cat, open sky</span></figcaption>
-          </figure>
-          <figure class="photo-item photo-item--tall" data-photo data-category="portrait daily" data-title="Close to the morning" data-caption="Close to the morning / portrait / {{ site.year }}">
-            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704496.jpg' %}" loading="lazy" width="1448" height="1080" alt="Close portrait resting against white bedding"></button>
-            <figcaption>PORTRAIT / 016 <span>Close to the morning</span></figcaption>
-          </figure>
-          <figure class="photo-item photo-item--medium" data-photo data-category="portrait objects selected" data-title="Held close" data-caption="Held close / portrait with object / {{ site.year }}">
-            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704499.jpg' %}" loading="lazy" width="1081" height="1458" alt="Portrait holding a black rabbit plush toy"></button>
-            <figcaption>PORTRAIT / 017 <span>Held close</span></figcaption>
-          </figure>
-          <figure class="photo-item photo-item--wide" data-photo data-category="portrait daily" data-title="In front of the glass" data-caption="In front of the glass / daily portrait / {{ site.year }}">
-            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704502.jpg' %}" loading="lazy" width="1100" height="1467" alt="Person standing in front of a shop window wearing black"></button>
-            <figcaption>DAILY / 018 <span>In front of the glass</span></figcaption>
-          </figure>
-          <figure class="photo-item photo-item--small" data-photo data-category="portrait daily" data-title="A black turtleneck" data-caption="A black turtleneck / portrait / {{ site.year }}">
-            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704504.jpg' %}" loading="lazy" width="1024" height="1536" alt="Person in a black turtleneck standing in a shop aisle"></button>
-            <figcaption>PORTRAIT / 019 <span>A black turtleneck</span></figcaption>
+            <figcaption>PORTRAIT / 017 <span>SpongeBob afternoon</span></figcaption>
           </figure>
           <figure class="photo-item photo-item--tall" data-photo data-category="portrait daily" data-title="Eyes above the light" data-caption="Eyes above the light / portrait / {{ site.year }}">
             <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704488.jpg' %}" loading="lazy" width="1368" height="1824" alt="Close portrait with a hand held above the eyes"></button>
-            <figcaption>PORTRAIT / 020 <span>Eyes above the light</span></figcaption>
+            <figcaption>PORTRAIT / 018 <span>Eyes above the light</span></figcaption>
+          </figure>
+          <figure class="photo-item photo-item--medium" data-photo data-category="portrait selected" data-title="Small colored frames" data-caption="Small colored frames / visual collage / {{ site.year }}">
+            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704489.jpg' %}" loading="lazy" width="1024" height="1536" alt="Illustrated collage of a person in colorful shirts with a kitten"></button>
+            <figcaption>VISUAL / 019 <span>Small colored frames</span></figcaption>
+          </figure>
+          <figure class="photo-item photo-item--wide" data-photo data-category="portrait daily" data-title="Close to the morning" data-caption="Close to the morning / portrait / {{ site.year }}">
+            <button type="button" class="photo-trigger"><img src="{% static 'diario/images/5041922874431704496.jpg' %}" loading="lazy" width="1448" height="1080" alt="Close portrait resting against white bedding"></button>
+            <figcaption>PORTRAIT / 020 <span>Close to the morning</span></figcaption>
           </figure>
         </div>
       </section>
 
       <section class="section archive reveal" id="archive" aria-labelledby="archive-title">
         <div class="archive__heading">
-          <p class="section-number">05 / ARCHIVE</p>
+          <p class="section-number">06 / ARCHIVE</p>
           <h2 id="archive-title">Memories,<br>kept in order.</h2>
           <p lang="ko">기억 보관함</p>
           <p><em>mes souvenirs.</em></p>
@@ -246,7 +254,7 @@
       <section class="soundtrack section" id="soundtrack" aria-labelledby="music-title">
         <div class="section-heading reveal">
           <div>
-            <p class="section-number">06 / SOUND</p>
+            <p class="section-number">07 / SOUND</p>
             <h2 id="music-title">Soundtrack</h2>
           </div>
           <div class="section-heading__aside">
@@ -266,7 +274,7 @@
       <section class="section about reveal" id="about" aria-labelledby="about-title">
         <div class="about__image"><img src="{% static 'diario/images/5041922874431704488.jpg' %}" loading="lazy" width="1368" height="1824" alt="Close portrait with a hand held above the eyes"></div>
         <div class="about__content">
-          <p class="section-number">07 / ABOUT</p>
+          <p class="section-number">08 / ABOUT</p>
           <h2 id="about-title">A collection of photographs, thoughts, music and memories.</h2>
           <p lang="ko">나에 대해</p>
           <p class="about__copy">This space has been designed to grow slowly: photographs can be added, notes can remain small, and each story can find its own place without becoming a feed.</p>
@@ -274,20 +282,6 @@
         </div>
       </section>
 
-      <section class="letter section reveal" aria-labelledby="letter-title">
-        <div class="letter__mark" aria-hidden="true">♥</div>
-        <p class="section-number">08 / LETTER</p>
-        <p class="letter__korean" lang="ko">마음에 남는 순간들</p>
-        <h2 id="letter-title">For the moments<br>that stay.</h2>
-        <div class="letter__body">
-          <p>Daxian,</p>
-          <p>Hay momentos que parecen pequeños cuando pasan, pero después se quedan dentro de nosotros de una forma imposible de olvidar. Una mirada, una risa, una canción o simplemente estar cerca puede terminar significando mucho más de lo que imaginamos.</p>
-          <p>Me gusta que contigo sea tan fácil apreciar esos momentos. No tienen que ser perfectos ni grandes; basta con que sean nuestros. Gracias por hacer que lo cotidiano se sienta bonito y por dejar recuerdos que guardo con mucho cariño.</p>
-          <p>Hay sentimientos muy internos que a veces no sé explicar del todo, pero están aquí: suaves, sinceros y presentes. Quería dejarte estas palabras para que sepas que cada instante compartido tiene un lugar especial en mi corazón.</p>
-          <p class="letter__closing">Esto es con amor y directo de mí para ti, simplemente es mi corazón.</p>
-        </div>
-        <p class="letter__french"><em>avec douceur, pour toi.</em></p>
-      </section>
     </main>
 
     <footer class="site-footer">
@@ -306,7 +300,7 @@
     <div class="overlay-dialog" id="menu-dialog" role="dialog" aria-modal="true" aria-label="Navigation menu" aria-hidden="true">
       <button class="dialog-close" type="button" data-close-dialog aria-label="Close navigation">×</button>
       <nav class="dialog-nav" aria-label="Full navigation">
-        <a href="#journal">Journal <span>01</span></a><a href="#photography">Photography <span>02</span></a><a href="#archive">Archive <span>03</span></a><a href="#soundtrack">Music <span>04</span></a><a href="#about">About <span>05</span></a>
+        <a href="#letter">Letter <span>01</span></a><a href="#journal">Journal <span>02</span></a><a href="#photography">Photography <span>03</span></a><a href="#archive">Archive <span>04</span></a><a href="#soundtrack">Music <span>05</span></a><a href="#about">About <span>06</span></a>
       </nav>
       <p class="dialog-note" lang="ko">천천히 둘러보세요.</p>
     </div>

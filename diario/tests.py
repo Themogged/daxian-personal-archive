@@ -10,7 +10,11 @@ class PublicPagesTests(TestCase):
         self.assertContains(response, "DAXIAN")
         self.assertContains(response, "PERSONAL ARCHIVE")
         self.assertContains(response, "love-song.mp3")
-        self.assertContains(response, "Esto es con amor y directo de mí para ti")
+        self.assertContains(response, "This is with love, straight from me to you; simply, it is my heart.")
+        self.assertLess(
+            response.content.index(b'id="letter"'),
+            response.content.index(b'id="photo-grid"'),
+        )
 
     def test_search_engine_files_are_available(self):
         robots = self.client.get(reverse("robots"))
