@@ -14,10 +14,19 @@ class PublicPagesTests(TestCase):
         self.assertContains(response, "A LETTER / FOR DAXIAN")
         self.assertContains(response, "avec tout mon cœur")
         self.assertContains(response, "This is with love, straight from me to you; simply, it is my heart.")
-        self.assertEqual(response.content.count(b"diario/images/"), 19)
+        self.assertContains(response, 'id="handwritten"')
+        self.assertContains(response, "handwritten-mon-amour.png")
+        self.assertContains(response, "Some feelings deserve")
+        self.assertContains(response, "Read the handwritten words")
+        self.assertContains(response, 'href="#handwritten"')
+        self.assertEqual(response.content.count(b"diario/images/"), 20)
         self.assertNotContains(response, "5041922874431704504.jpg")
         self.assertLess(
             response.content.index(b'id="letter"'),
+            response.content.index(b'id="handwritten"'),
+        )
+        self.assertLess(
+            response.content.index(b'id="handwritten"'),
             response.content.index(b'id="photo-grid"'),
         )
 

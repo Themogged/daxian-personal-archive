@@ -13,7 +13,7 @@
   const lightbox = document.getElementById("lightbox");
   const lightboxImage = document.getElementById("lightbox-image");
   const lightboxCaption = document.getElementById("lightbox-caption");
-  const photoItems = Array.from(document.querySelectorAll("#photography [data-photo]"));
+  const photoItems = Array.from(document.querySelectorAll("[data-photo]"));
   const revealItems = Array.from(document.querySelectorAll(".reveal"));
 
   let activeOverlay = null;

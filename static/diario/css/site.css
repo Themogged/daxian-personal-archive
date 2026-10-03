@@ -208,6 +208,43 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--rose-deep); out
 .keepsake-card h3 { margin: 0; font-family: var(--serif); font-size: clamp(1.35rem, 2vw, 1.85rem); font-weight: 500; letter-spacing: -.035em; line-height: 1.08; }
 .keepsake-card p { margin: .7rem 0 0; color: var(--muted); font-size: .78rem; line-height: 1.65; }
 
+.handwritten {
+  position: relative;
+  padding: clamp(6rem, 10vw, 10rem) 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 76% 20%, rgba(239, 208, 213, .16), transparent 24rem),
+    radial-gradient(circle at 8% 88%, rgba(242, 221, 165, .1), transparent 20rem),
+    linear-gradient(145deg, #3c2930, #2d2226);
+  color: var(--cream);
+}
+.handwritten::before, .handwritten::after { position: absolute; color: rgba(239, 208, 213, .12); font-family: var(--serif); pointer-events: none; }
+.handwritten::before { top: 2rem; left: 4vw; content: "♡"; font-size: clamp(7rem, 15vw, 14rem); transform: rotate(-15deg); }
+.handwritten::after { right: 5vw; bottom: 1rem; content: "✦"; font-size: clamp(4rem, 9vw, 8rem); transform: rotate(11deg); }
+.handwritten__inner { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, .9fr) minmax(22rem, .78fr); gap: clamp(3rem, 9vw, 9rem); align-items: center; }
+.handwritten__copy { max-width: 37rem; }
+.handwritten__copy .soft-label { color: var(--rose-soft); }
+.handwritten__french { margin: 1.2rem 0 .45rem; color: var(--butter); font-family: var(--serif); font-size: 1rem; font-style: italic; }
+.handwritten__copy h2 { margin: 0; font-family: var(--serif); font-size: clamp(3.5rem, 6.7vw, 6.6rem); font-weight: 500; letter-spacing: -.065em; line-height: .9; }
+.handwritten__copy h2 em { color: var(--rose-soft); font-weight: 500; }
+.handwritten__copy > p:not(.soft-label, .handwritten__french) { max-width: 30rem; margin: 1.8rem 0 0; color: rgba(255, 250, 243, .7); font-size: .9rem; line-height: 1.8; }
+.handwritten__copy > span { display: inline-flex; gap: .5rem; align-items: center; margin-top: 2rem; color: var(--rose-soft); font-family: var(--serif); font-size: 1rem; font-style: italic; }
+.handwritten__copy > span i { color: var(--butter); font-size: 1.25rem; font-style: normal; }
+.handwritten__transcript { max-width: 30rem; margin-top: 1.8rem; border-top: 1px solid rgba(255, 255, 255, .12); border-bottom: 1px solid rgba(255, 255, 255, .12); color: rgba(255, 250, 243, .72); }
+.handwritten__transcript summary { padding: .9rem 0; color: var(--rose-soft); cursor: pointer; font-size: .65rem; font-weight: 600; letter-spacing: .11em; list-style-position: inside; text-transform: uppercase; }
+.handwritten__transcript summary:focus-visible { outline: 2px solid var(--butter); outline-offset: .25rem; }
+.handwritten__transcript p { margin: 0; padding: 0 0 1rem; font-family: var(--serif); font-size: .86rem; font-style: italic; line-height: 1.7; }
+.handwritten__frame { position: relative; isolation: isolate; width: min(100%, 34rem); justify-self: center; padding: clamp(.55rem, 1vw, .85rem); margin: 0; border-radius: 1.2rem; background: #fffaf3; box-shadow: 1.6rem 2rem 0 rgba(239, 208, 213, .09), 0 2.2rem 6rem rgba(0, 0, 0, .32); transform: rotate(.8deg); }
+.handwritten__frame::before { position: absolute; z-index: -1; inset: -.65rem .8rem .7rem -.75rem; border: 1px solid rgba(255, 255, 255, .13); border-radius: 1.45rem; content: ""; transform: rotate(-2deg); }
+.handwritten__trigger { border-radius: .65rem; background: #e9dfcb; box-shadow: none; }
+.handwritten__trigger img { width: 100%; height: auto; transition: transform .55s cubic-bezier(.2,.6,.3,1); }
+.handwritten__trigger:hover img { transform: scale(1.012); }
+.handwritten__frame figcaption { display: flex; justify-content: space-between; gap: 1rem; align-items: center; padding: 1rem .65rem .4rem; color: var(--rose-deep); font-family: var(--serif); font-size: .86rem; font-style: italic; }
+.handwritten__frame figcaption i { color: var(--rose); font-size: 1.2rem; font-style: normal; }
+.handwritten__tape { position: absolute; z-index: 2; top: -.9rem; width: 5.5rem; height: 1.65rem; background: rgba(242, 221, 165, .78); box-shadow: 0 .2rem .5rem rgba(42, 28, 32, .12); pointer-events: none; }
+.handwritten__tape--left { left: 12%; transform: rotate(-7deg); }
+.handwritten__tape--right { right: 10%; transform: rotate(6deg); }
+
 .photography { padding: clamp(6rem, 10vw, 10rem) 0 clamp(5rem, 9vw, 9rem); background: rgba(255, 255, 255, .57); }
 .photo-heading { position: relative; text-align: center; }
 .photo-heading::before { display: block; width: 4rem; height: 1px; margin: 0 auto 2.4rem; content: ""; background: var(--rose-soft); }
@@ -339,6 +376,11 @@ body.audio-playing .song-vinyl__disc { animation: spin 14s linear infinite; }
   .keepsake-card, .keepsake-card--lifted { width: min(100%, 34rem); margin: 0 auto; }
   .keepsake-card:nth-child(2) { transform: translateX(3vw); }
   .keepsake-card:nth-child(3) { transform: translateX(-2vw); }
+  .handwritten__inner { grid-template-columns: 1fr; }
+  .handwritten__copy { max-width: 39rem; text-align: center; justify-self: center; }
+  .handwritten__copy > p:not(.soft-label, .handwritten__french) { margin-right: auto; margin-left: auto; }
+  .handwritten__transcript { margin-right: auto; margin-left: auto; text-align: left; }
+  .handwritten__frame { width: min(100%, 33rem); }
   .photo-heading { text-align: left; }
   .photo-heading::before { margin-left: 0; }
   .photo-heading__note { flex-direction: column; gap: .2rem; align-items: flex-start; }
@@ -374,6 +416,12 @@ body.audio-playing .song-vinyl__disc { animation: spin 14s linear infinite; }
   .section-intro h2, .photo-heading h2 { font-size: clamp(2.9rem, 14vw, 4.5rem); }
   .keepsakes { padding-top: 5.5rem; padding-bottom: 6rem; }
   .keepsake-card:nth-child(2), .keepsake-card:nth-child(3) { transform: none; }
+  .handwritten { padding: 5.5rem 0; }
+  .handwritten__copy h2 { font-size: clamp(3.25rem, 15vw, 4.7rem); }
+  .handwritten__copy > p:not(.soft-label, .handwritten__french) { font-size: .84rem; }
+  .handwritten__frame { width: calc(100% - .6rem); transform: rotate(.45deg); }
+  .handwritten__frame figcaption { align-items: flex-start; font-size: .76rem; }
+  .handwritten__tape { width: 4.2rem; height: 1.35rem; }
   .photo-grid { columns: 1; }
   .photo-item { margin-bottom: 2rem; }
   .photo-trigger { border-radius: 1.2rem; }

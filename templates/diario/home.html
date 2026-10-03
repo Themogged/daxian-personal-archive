@@ -66,7 +66,32 @@
           <figcaption><span>one of the moments I keep close</span><i aria-hidden="true">♡</i></figcaption>
           <div class="opening__note" aria-hidden="true">you make ordinary days<br>feel worth keeping.</div>
         </figure>
-        <a class="opening__scroll" href="#memories">keep reading <span aria-hidden="true">↓</span></a>
+        <a class="opening__scroll" href="#handwritten">keep reading <span aria-hidden="true">↓</span></a>
+      </section>
+
+      <section class="handwritten" id="handwritten" aria-labelledby="handwritten-title">
+        <div class="handwritten__inner section">
+          <div class="handwritten__copy reveal">
+            <p class="soft-label">ONE PAGE / KEPT APART</p>
+            <p class="handwritten__french" lang="fr">Mon amour irréel</p>
+            <h2 id="handwritten-title">Some feelings deserve<br><em>their own page.</em></h2>
+            <p>Written slowly, kept gently. Every line holds something the heart never learned to forget.</p>
+            <span>pour toi, toujours <i aria-hidden="true">♡</i></span>
+            <details class="handwritten__transcript">
+              <summary id="handwritten-transcript-label">Read the handwritten words</summary>
+              <p lang="fr">Tu es cet amour qui n’a peut-être jamais vraiment existé, et pourtant je l’ai vécu comme si c’était le plus réel du monde. Un sentiment qui semble irréel, comme un rêve trop beau pour être vrai, mais qui a laissé en moi des traces bien réelles. Même si nos chemins ne pouvaient jamais se rejoindre, tu as été une partie si spéciale de ma vie, un moment que je chérirai toujours. Je ne peux pas t’oublier, parce que tu fais encore partie de moi, dans mes pensées, dans mes silences, dans tout ce que je ressens. Tu es un amour impossible, mais inoubliable, un chapitre qui restera toujours dans mon cœur, même si la réalité nous sépare.</p>
+            </details>
+          </div>
+
+          <figure class="handwritten__frame reveal" data-photo data-title="Mon amour irréel" data-caption="Mon amour irréel / a handwritten page kept close / {{ site.year }}">
+            <span class="handwritten__tape handwritten__tape--left" aria-hidden="true"></span>
+            <span class="handwritten__tape handwritten__tape--right" aria-hidden="true"></span>
+            <button type="button" class="photo-trigger handwritten__trigger" aria-label="Open the handwritten letter" aria-describedby="handwritten-transcript-label">
+              <img src="{% static 'diario/images/handwritten-mon-amour.png' %}" loading="lazy" decoding="async" width="1086" height="1448" alt="Handwritten French letter titled Mon amour irréel, decorated with pink stars and a bow">
+            </button>
+            <figcaption><span>the page that says what silence could not.</span><i aria-hidden="true">♡</i></figcaption>
+          </figure>
+        </div>
       </section>
 
       <section class="keepsakes section" id="memories" aria-labelledby="keepsakes-title">
@@ -239,7 +264,7 @@
 
     <footer class="site-footer">
       <div class="brand"><span class="brand__name">{{ site.name }}</span><span class="brand__descriptor">made from the heart</span></div>
-      <p>One song, nineteen photographs, and a letter kept with love.</p>
+      <p>One song, nineteen photographs, one handwritten page, and a letter kept with love.</p>
       <span>© {{ site.year }} {{ site.name }}</span>
     </footer>
 
@@ -268,10 +293,10 @@
     </div>
 
     <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lightbox-caption" aria-hidden="true">
-      <button class="lightbox__close" type="button" data-close-lightbox aria-label="Close photograph">×</button>
-      <button class="lightbox__nav lightbox__nav--previous" type="button" data-lightbox-previous aria-label="Previous photograph">←</button>
+      <button class="lightbox__close" type="button" data-close-lightbox aria-label="Close image">×</button>
+      <button class="lightbox__nav lightbox__nav--previous" type="button" data-lightbox-previous aria-label="Previous image">←</button>
       <figure class="lightbox__figure"><img id="lightbox-image" src="" alt=""><figcaption id="lightbox-caption"></figcaption></figure>
-      <button class="lightbox__nav lightbox__nav--next" type="button" data-lightbox-next aria-label="Next photograph">→</button>
+      <button class="lightbox__nav lightbox__nav--next" type="button" data-lightbox-next aria-label="Next image">→</button>
     </div>
   </body>
 </html>
