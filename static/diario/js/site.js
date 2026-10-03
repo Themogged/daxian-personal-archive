@@ -1,65 +1,111 @@
 (() => {
   "use strict";
 
+  document.documentElement.classList.add("js");
+
   const body = document.body;
   const header = document.getElementById("site-header");
   const audio = document.getElementById("archive-audio");
   const player = document.getElementById("music-player");
   const progress = document.getElementById("audio-progress");
-  const toast = document.getElementById("toast");
+  const audioButtons = Array.from(document.querySelectorAll("[data-toggle-audio]"));
+  const menuDialog = document.getElementById("menu-dialog");
   const lightbox = document.getElementById("lightbox");
   const lightboxImage = document.getElementById("lightbox-image");
   const lightboxCaption = document.getElementById("lightbox-caption");
-  const photoItems = Array.from(document.querySelectorAll("[data-photo]"));
-  const searchDialog = document.getElementById("search-dialog");
-  const menuDialog = document.getElementById("menu-dialog");
-  const searchInput = document.getElementById("archive-search");
-  const searchResults = document.getElementById("search-results");
+  const photoItems = Array.from(document.querySelectorAll("#photography [data-photo]"));
+  const revealItems = Array.from(document.querySelectorAll(".reveal"));
 
   let activeOverlay = null;
   let lastTrigger = null;
   let activePhotoIndex = 0;
-  let toastTimer = null;
   let touchStartX = 0;
+  let pendingPlay = null;
+  let unlockListenersAttached = false;
 
   const focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])';
-
-  function showToast(message) {
-    toast.textContent = message;
-    toast.classList.add("is-visible");
-    window.clearTimeout(toastTimer);
-    toastTimer = window.setTimeout(() => toast.classList.remove("is-visible"), 2600);
-  }
+  const unlockEvents = ["pointerdown", "touchstart", "keydown"];
 
   function updateHeader() {
-    header.classList.toggle("is-scrolled", window.scrollY > 20);
+    header?.classList.toggle("is-scrolled", window.scrollY > 18);
   }
 
-  function setPlayerPlaying(isPlaying) {
+  function updateAudioInterface(state) {
+    if (!player) return;
+
+    const isPlaying = state === "playing";
+    player.dataset.audioState = state;
     body.classList.toggle("audio-playing", isPlaying);
-    document.querySelectorAll("[data-toggle-audio]").forEach((button) => {
-      const icon = button.querySelector("span");
-      button.setAttribute("aria-label", isPlaying ? "Pause archive track" : "Play archive track");
+
+    const labels = {
+      starting: "STARTING SOFTLY",
+      playing: "PLAYING FOR DAXIAN",
+      paused: "PAUSED / TAP TO PLAY",
+      blocked: "TAP ONCE TO HEAR IT",
+    };
+    const kicker = player.querySelector("[data-audio-kicker]");
+    if (kicker) kicker.textContent = labels[state] || labels.paused;
+
+    audioButtons.forEach((button) => {
+      const icon = button.querySelector("[aria-hidden='true']");
+      button.setAttribute("aria-label", isPlaying ? "Pause our song" : "Play our song");
       if (icon) icon.textContent = isPlaying ? "Ⅱ" : "▶";
     });
   }
 
+  function detachAudioUnlock() {
+    if (!unlockListenersAttached) return;
+    unlockEvents.forEach((eventName) => document.removeEventListener(eventName, unlockAudio, true));
+    unlockListenersAttached = false;
+  }
+
+  function attachAudioUnlock() {
+    if (unlockListenersAttached) return;
+    unlockEvents.forEach((eventName) => document.addEventListener(eventName, unlockAudio, { capture: true, passive: eventName !== "keydown" }));
+    unlockListenersAttached = true;
+  }
+
   async function startAudio() {
-    if (!audio) return;
-    audio.volume = 0.5;
-    try {
-      await audio.play();
-    } catch (_) {
-      // Some browsers block audible autoplay. The persistent player remains available.
+    if (!audio) return false;
+    if (!audio.paused) {
+      updateAudioInterface("playing");
+      detachAudioUnlock();
+      return true;
     }
+    if (pendingPlay) return pendingPlay;
+
+    audio.volume = 0.4;
+    updateAudioInterface("starting");
+    pendingPlay = audio.play()
+      .then(() => {
+        updateAudioInterface("playing");
+        detachAudioUnlock();
+        return true;
+      })
+      .catch(() => {
+        updateAudioInterface("blocked");
+        attachAudioUnlock();
+        return false;
+      })
+      .finally(() => {
+        pendingPlay = null;
+      });
+
+    return pendingPlay;
+  }
+
+  function unlockAudio(event) {
+    if (!audio?.paused) {
+      detachAudioUnlock();
+      return;
+    }
+    if (event.type === "keydown" && (event.key === "Tab" || event.key === "Escape" || event.ctrlKey || event.metaKey || event.altKey)) return;
+    if (event.target instanceof Element && event.target.closest("[data-toggle-audio]")) return;
+    startAudio();
   }
 
   function toggleAudio() {
-    if (player.classList.contains("is-minimized")) {
-      player.classList.remove("is-minimized");
-      document.querySelector("[data-minimize-player]").setAttribute("aria-label", "Minimize music player");
-      return;
-    }
+    if (!audio) return;
     if (audio.paused) startAudio();
     else audio.pause();
   }
@@ -100,149 +146,95 @@
     }
   }
 
-  function getVisiblePhotos() {
-    return photoItems.filter((photo) => !photo.hidden);
-  }
-
-  function openLightbox(photo, trigger) {
-    const photos = getVisiblePhotos();
-    activePhotoIndex = Math.max(0, photos.indexOf(photo));
-    lastTrigger = trigger || photo.querySelector("button");
-    renderLightbox();
-    openOverlay(lightbox, lastTrigger);
-  }
-
   function renderLightbox() {
-    const photos = getVisiblePhotos();
-    if (!photos.length) return;
-    if (activePhotoIndex >= photos.length) activePhotoIndex = 0;
-    const photo = photos[activePhotoIndex];
+    if (!photoItems.length || !lightboxImage || !lightboxCaption) return;
+    activePhotoIndex = (activePhotoIndex + photoItems.length) % photoItems.length;
+    const photo = photoItems[activePhotoIndex];
     const image = photo.querySelector("img");
     lightboxImage.src = image.currentSrc || image.src;
     lightboxImage.alt = image.alt;
     lightboxCaption.textContent = photo.dataset.caption || photo.dataset.title || image.alt;
   }
 
+  function openLightbox(photo, trigger) {
+    activePhotoIndex = Math.max(0, photoItems.indexOf(photo));
+    renderLightbox();
+    openOverlay(lightbox, trigger);
+  }
+
   function moveLightbox(direction) {
-    const photos = getVisiblePhotos();
-    if (!photos.length) return;
-    activePhotoIndex = (activePhotoIndex + direction + photos.length) % photos.length;
+    activePhotoIndex += direction;
     renderLightbox();
   }
 
-  function applyFilter(filter) {
-    photoItems.forEach((photo) => {
-      const categories = (photo.dataset.category || "").split(/\s+/);
-      photo.hidden = filter !== "all" && !categories.includes(filter);
-    });
-    document.querySelectorAll("[data-filter]").forEach((button) => {
-      button.classList.toggle("is-active", button.dataset.filter === filter);
-      button.setAttribute("aria-pressed", button.dataset.filter === filter ? "true" : "false");
-    });
-  }
-
-  function getSearchEntries() {
-    const entries = [];
-    document.querySelectorAll("[data-searchable]").forEach((item) => {
-      const title = item.dataset.title;
-      if (!title || entries.some((entry) => entry.title === title)) return;
-      let target = "#journal";
-      if (item.closest(".archive")) target = "#archive";
-      if ((item.dataset.category || "").includes("music")) target = "#soundtrack";
-      entries.push({ title, category: item.dataset.category || "archive", target });
-    });
-    photoItems.forEach((item) => {
-      const title = item.dataset.title;
-      if (!title || entries.some((entry) => entry.title === title)) return;
-      entries.push({ title, category: item.dataset.category || "photography", target: "#photography" });
-    });
-    return entries;
-  }
-
-  const searchEntries = getSearchEntries();
-
-  function renderSearch(query = "") {
-    searchResults.replaceChildren();
-    const normalizedQuery = query.trim().toLocaleLowerCase();
-    if (!normalizedQuery) {
-      const helper = document.createElement("p");
-      helper.className = "search-hint";
-      helper.textContent = "Search the journal, photographs and sound archive.";
-      searchResults.append(helper);
+  function initializeReveals() {
+    if (!revealItems.length) return;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      revealItems.forEach((item) => item.classList.add("is-visible"));
       return;
     }
-    const matches = searchEntries.filter((entry) => `${entry.title} ${entry.category}`.toLocaleLowerCase().includes(normalizedQuery));
-    if (!matches.length) {
-      const noResults = document.createElement("p");
-      noResults.className = "search-hint";
-      noResults.textContent = "Nothing here yet. 아직 기록이 없습니다.";
-      searchResults.append(noResults);
-      return;
-    }
-    matches.slice(0, 8).forEach((entry, index) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "search-result";
-      button.dataset.target = entry.target;
-      const number = document.createElement("span");
-      number.textContent = String(index + 1).padStart(2, "0");
-      const title = document.createElement("strong");
-      title.textContent = entry.title;
-      const category = document.createElement("em");
-      category.textContent = entry.category.toUpperCase();
-      button.append(number, title, category);
-      searchResults.append(button);
-    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin: "0px 0px -8%", threshold: 0.08 });
+
+    revealItems.forEach((item) => observer.observe(item));
   }
 
-  startAudio();
-
-  window.addEventListener("scroll", updateHeader, { passive: true });
   updateHeader();
+  initializeReveals();
+  startAudio();
+  window.addEventListener("load", () => {
+    if (audio?.paused) startAudio();
+  }, { once: true });
+  window.addEventListener("scroll", updateHeader, { passive: true });
 
-  document.querySelectorAll("[data-open-menu]").forEach((button) => button.addEventListener("click", () => openOverlay(menuDialog, button)));
-  document.querySelectorAll("[data-open-search]").forEach((button) => button.addEventListener("click", () => {
-    openOverlay(searchDialog, button);
-    renderSearch();
-    window.setTimeout(() => searchInput.focus(), 40);
-  }));
-  document.querySelectorAll("[data-close-dialog]").forEach((button) => button.addEventListener("click", () => closeOverlay()));
-  menuDialog.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => closeOverlay(menuDialog, false)));
-
-  searchInput.addEventListener("input", (event) => renderSearch(event.target.value));
-  searchResults.addEventListener("click", (event) => {
-    const button = event.target.closest(".search-result");
-    if (!button) return;
-    closeOverlay(searchDialog, false);
-    document.querySelector(button.dataset.target)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  audioButtons.forEach((button) => button.addEventListener("click", toggleAudio));
+  document.querySelector("[data-minimize-player]")?.addEventListener("click", () => {
+    player?.classList.add("is-minimized");
   });
 
-  document.querySelectorAll("[data-filter]").forEach((button) => {
-    button.setAttribute("aria-pressed", button.classList.contains("is-active") ? "true" : "false");
-    button.addEventListener("click", () => applyFilter(button.dataset.filter));
+  audio?.addEventListener("play", () => updateAudioInterface("playing"));
+  audio?.addEventListener("pause", () => updateAudioInterface("paused"));
+  audio?.addEventListener("ended", () => {
+    if (progress) progress.style.width = "0";
+    updateAudioInterface("paused");
   });
-  photoItems.forEach((photo) => photo.querySelector(".photo-trigger").addEventListener("click", (event) => openLightbox(photo, event.currentTarget)));
-  document.querySelector("[data-close-lightbox]").addEventListener("click", () => closeOverlay(lightbox));
-  document.querySelector("[data-lightbox-previous]").addEventListener("click", () => moveLightbox(-1));
-  document.querySelector("[data-lightbox-next]").addEventListener("click", () => moveLightbox(1));
-  lightbox.addEventListener("touchstart", (event) => { touchStartX = event.changedTouches[0].screenX; }, { passive: true });
-  lightbox.addEventListener("touchend", (event) => {
-    const distance = event.changedTouches[0].screenX - touchStartX;
-    if (Math.abs(distance) > 50) moveLightbox(distance > 0 ? -1 : 1);
-  }, { passive: true });
-
-  document.querySelectorAll("[data-toggle-audio]").forEach((button) => button.addEventListener("click", toggleAudio));
-  document.querySelector("[data-minimize-player]").addEventListener("click", () => {
-    player.classList.add("is-minimized");
-    player.querySelector("[data-toggle-audio]").setAttribute("aria-label", "Expand music player");
-  });
-  audio.addEventListener("play", () => setPlayerPlaying(true));
-  audio.addEventListener("pause", () => setPlayerPlaying(false));
-  audio.addEventListener("ended", () => { progress.style.width = "0"; });
-  audio.addEventListener("timeupdate", () => {
+  audio?.addEventListener("timeupdate", () => {
+    if (!progress) return;
     const percentage = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
     progress.style.width = `${percentage}%`;
   });
+
+  document.querySelectorAll("[data-open-menu]").forEach((button) => {
+    button.addEventListener("click", () => openOverlay(menuDialog, button));
+  });
+  document.querySelectorAll("[data-close-dialog]").forEach((button) => {
+    button.addEventListener("click", () => closeOverlay());
+  });
+  menuDialog?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => closeOverlay(menuDialog, false));
+  });
+
+  photoItems.forEach((photo) => {
+    const trigger = photo.querySelector(".photo-trigger");
+    trigger?.addEventListener("click", () => openLightbox(photo, trigger));
+  });
+  document.querySelector("[data-close-lightbox]")?.addEventListener("click", () => closeOverlay(lightbox));
+  document.querySelector("[data-lightbox-previous]")?.addEventListener("click", () => moveLightbox(-1));
+  document.querySelector("[data-lightbox-next]")?.addEventListener("click", () => moveLightbox(1));
+  lightbox?.addEventListener("touchstart", (event) => {
+    touchStartX = event.changedTouches[0].screenX;
+  }, { passive: true });
+  lightbox?.addEventListener("touchend", (event) => {
+    const distance = event.changedTouches[0].screenX - touchStartX;
+    if (Math.abs(distance) > 50) moveLightbox(distance > 0 ? -1 : 1);
+  }, { passive: true });
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && activeOverlay) {
@@ -250,8 +242,14 @@
       closeOverlay();
       return;
     }
-    if (activeOverlay === lightbox && event.key === "ArrowLeft") { event.preventDefault(); moveLightbox(-1); }
-    if (activeOverlay === lightbox && event.key === "ArrowRight") { event.preventDefault(); moveLightbox(1); }
+    if (activeOverlay === lightbox && event.key === "ArrowLeft") {
+      event.preventDefault();
+      moveLightbox(-1);
+    }
+    if (activeOverlay === lightbox && event.key === "ArrowRight") {
+      event.preventDefault();
+      moveLightbox(1);
+    }
     trapFocus(event);
   });
 })();

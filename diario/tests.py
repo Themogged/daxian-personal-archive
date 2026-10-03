@@ -10,7 +10,11 @@ class PublicPagesTests(TestCase):
         self.assertContains(response, "DAXIAN")
         self.assertContains(response, "PERSONAL ARCHIVE")
         self.assertContains(response, "love-song.mp3")
+        self.assertContains(response, 'autoplay playsinline preload="auto"')
+        self.assertContains(response, "A LETTER / FOR DAXIAN")
+        self.assertContains(response, "avec tout mon cœur")
         self.assertContains(response, "This is with love, straight from me to you; simply, it is my heart.")
+        self.assertEqual(response.content.count(b"diario/images/"), 20)
         self.assertLess(
             response.content.index(b'id="letter"'),
             response.content.index(b'id="photo-grid"'),
