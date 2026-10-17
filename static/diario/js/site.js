@@ -6,11 +6,12 @@
   const body = document.body;
   const header = document.getElementById("site-header");
   const footer = document.querySelector(".site-footer");
+  const skipLink = document.querySelector(".skip-link");
   const main = document.getElementById("main-content");
   const pageProgress = document.getElementById("page-progress-bar");
   const audio = document.getElementById("archive-audio");
   const player = document.getElementById("music-player");
-  const progress = document.getElementById("audio-progress");
+  const audioSeek = document.getElementById("audio-seek");
   const audioTime = document.getElementById("audio-time");
   const audioButtons = Array.from(document.querySelectorAll("[data-toggle-audio]"));
   const minimizeButton = document.querySelector("[data-minimize-player]");
@@ -24,6 +25,7 @@
   const photoItems = Array.from(document.querySelectorAll("[data-photo]"));
   const revealItems = Array.from(document.querySelectorAll(".reveal"));
   const navLinks = Array.from(document.querySelectorAll("[data-section-link]"));
+  const navSections = navLinks.map((link) => document.querySelector(link.getAttribute("href")));
   const portrait = document.querySelector("[data-portrait]");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -31,15 +33,18 @@
   let lastTrigger = null;
   let activePhotoIndex = 0;
   let touchStartX = 0;
+  let touchStartY = 0;
   let pendingPlay = null;
   let unlockListenersAttached = false;
   let volumeAnimation = null;
   let scrollFrame = null;
+  let portraitFrame = null;
   let playerCollapseTimer = null;
+  let activeNavIndex = -1;
 
   const focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])';
   const unlockEvents = ["pointerdown", "touchstart", "keydown"];
-  const pageShell = [header, main, footer, player].filter(Boolean);
+  const pageShell = [skipLink, header, main, footer, player].filter(Boolean);
 
   function setInert(element, isInert) {
     if (!element) return;
@@ -57,22 +62,24 @@
     if (pageProgress) {
       const scrollable = document.documentElement.scrollHeight - window.innerHeight;
       const percentage = scrollable > 0 ? Math.min(100, Math.max(0, (window.scrollY / scrollable) * 100)) : 0;
-      pageProgress.style.width = `${percentage}%`;
+      pageProgress.style.transform = `scaleX(${percentage / 100})`;
     }
 
     if (navLinks.length) {
       const marker = window.innerHeight * 0.38;
-      let activeLink = navLinks[0];
-      navLinks.forEach((link) => {
-        const section = document.querySelector(link.getAttribute("href"));
-        if (section && section.getBoundingClientRect().top <= marker) activeLink = link;
+      let nextActiveIndex = 0;
+      navSections.forEach((section, index) => {
+        if (section && section.getBoundingClientRect().top <= marker) nextActiveIndex = index;
       });
-      navLinks.forEach((link) => {
-        const isActive = link === activeLink;
-        link.classList.toggle("is-active", isActive);
-        if (isActive) link.setAttribute("aria-current", "location");
-        else link.removeAttribute("aria-current");
-      });
+      if (nextActiveIndex !== activeNavIndex) {
+        activeNavIndex = nextActiveIndex;
+        navLinks.forEach((link, index) => {
+          const isActive = index === activeNavIndex;
+          link.classList.toggle("is-active", isActive);
+          if (isActive) link.setAttribute("aria-current", "location");
+          else link.removeAttribute("aria-current");
+        });
+      }
     }
   }
 
@@ -104,6 +111,7 @@
     audioButtons.forEach((button) => {
       const icon = button.querySelector("[aria-hidden='true']");
       button.setAttribute("aria-label", isPlaying ? "Pause our song" : "Play our song");
+      button.setAttribute("aria-pressed", String(isPlaying));
       if (icon) icon.textContent = isPlaying ? "Ⅱ" : "▶";
     });
   }
@@ -126,6 +134,12 @@
       else volumeAnimation = null;
     };
     volumeAnimation = window.requestAnimationFrame(step);
+  }
+
+  function stopVolumeAnimation() {
+    if (!volumeAnimation) return;
+    window.cancelAnimationFrame(volumeAnimation);
+    volumeAnimation = null;
   }
 
   function detachAudioUnlock() {
@@ -214,7 +228,11 @@
   function updateAudioProgress() {
     if (!audio) return;
     const percentage = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
-    if (progress) progress.style.width = `${percentage}%`;
+    if (audioSeek) {
+      audioSeek.value = String(percentage);
+      audioSeek.style.setProperty("--audio-progress", `${percentage}%`);
+      audioSeek.setAttribute("aria-valuetext", `${formatTime(audio.currentTime)} of ${formatTime(audio.duration)}`);
+    }
     if (audioTime) audioTime.textContent = formatTime(audio.currentTime);
   }
 
@@ -234,7 +252,9 @@
     body.classList.add("dialog-open");
     updateMenuButtonState(overlay === menuDialog);
     const firstFocusable = overlay.querySelector(focusableSelector);
-    window.setTimeout(() => firstFocusable?.focus(), 30);
+    window.setTimeout(() => {
+      if (activeOverlay === overlay && overlay.classList.contains("is-open")) firstFocusable?.focus();
+    }, 30);
   }
 
   function closeOverlay(overlay = activeOverlay, restoreFocus = true) {
@@ -335,12 +355,18 @@
       const bounds = portrait.getBoundingClientRect();
       const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * -7;
       const y = ((event.clientY - bounds.top) / bounds.height - 0.5) * -7;
-      portrait.style.setProperty("--portrait-x", `${x}px`);
-      portrait.style.setProperty("--portrait-y", `${y}px`);
+      if (portraitFrame) window.cancelAnimationFrame(portraitFrame);
+      portraitFrame = window.requestAnimationFrame(() => {
+        portrait.style.setProperty("--portrait-x", `${x}px`);
+        portrait.style.setProperty("--portrait-y", `${y}px`);
+        portraitFrame = null;
+      });
     });
     portrait.addEventListener("pointerleave", () => {
+      if (portraitFrame) window.cancelAnimationFrame(portraitFrame);
       portrait.style.setProperty("--portrait-x", "0px");
       portrait.style.setProperty("--portrait-y", "0px");
+      portraitFrame = null;
     });
   }
 
@@ -357,7 +383,10 @@
     if (audio?.paused) startAudio();
   }, { once: true });
   window.addEventListener("scroll", requestScrollUpdate, { passive: true });
-  window.addEventListener("resize", requestScrollUpdate, { passive: true });
+  window.addEventListener("resize", () => {
+    requestScrollUpdate();
+    if (!audio?.paused) schedulePlayerCollapse();
+  }, { passive: true });
 
   audioButtons.forEach((button) => button.addEventListener("click", toggleAudio));
   minimizeButton?.addEventListener("click", () => {
@@ -369,17 +398,32 @@
   });
 
   audio?.addEventListener("play", () => updateAudioInterface("playing"));
-  audio?.addEventListener("pause", () => updateAudioInterface("paused"));
+  audio?.addEventListener("pause", () => {
+    stopVolumeAnimation();
+    updateAudioInterface("paused");
+  });
   audio?.addEventListener("ended", () => {
-    if (progress) progress.style.width = "0";
+    stopVolumeAnimation();
+    if (audioSeek) {
+      audioSeek.value = "0";
+      audioSeek.style.setProperty("--audio-progress", "0%");
+    }
     if (audioTime) audioTime.textContent = "0:00";
     updateAudioInterface("paused");
   });
   audio?.addEventListener("timeupdate", updateAudioProgress);
   audio?.addEventListener("loadedmetadata", updateAudioProgress);
   audio?.addEventListener("error", () => {
+    stopVolumeAnimation();
     detachAudioUnlock();
     updateAudioInterface("error");
+  });
+  audioSeek?.addEventListener("input", () => {
+    if (!audio?.duration) return;
+    const percentage = Number(audioSeek.value);
+    audio.currentTime = (percentage / 100) * audio.duration;
+    audioSeek.style.setProperty("--audio-progress", `${percentage}%`);
+    audioSeek.setAttribute("aria-valuetext", `${formatTime(audio.currentTime)} of ${formatTime(audio.duration)}`);
   });
 
   menuButtons.forEach((button) => {
@@ -389,7 +433,15 @@
     button.addEventListener("click", () => closeOverlay());
   });
   menuDialog?.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => closeOverlay(menuDialog, false));
+    link.addEventListener("click", () => {
+      const target = document.querySelector(link.getAttribute("href"));
+      closeOverlay(menuDialog, false);
+      window.setTimeout(() => {
+        if (!(target instanceof HTMLElement)) return;
+        if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+        target.focus({ preventScroll: true });
+      }, 0);
+    });
   });
   menuDialog?.addEventListener("click", (event) => {
     if (event.target === menuDialog) closeOverlay(menuDialog);
@@ -409,10 +461,12 @@
   });
   lightbox?.addEventListener("touchstart", (event) => {
     touchStartX = event.changedTouches[0].screenX;
+    touchStartY = event.changedTouches[0].screenY;
   }, { passive: true });
   lightbox?.addEventListener("touchend", (event) => {
-    const distance = event.changedTouches[0].screenX - touchStartX;
-    if (Math.abs(distance) > 50) moveLightbox(distance > 0 ? -1 : 1);
+    const distanceX = event.changedTouches[0].screenX - touchStartX;
+    const distanceY = event.changedTouches[0].screenY - touchStartY;
+    if (Math.abs(distanceX) > 50 && Math.abs(distanceX) > Math.abs(distanceY)) moveLightbox(distanceX > 0 ? -1 : 1);
   }, { passive: true });
 
   document.addEventListener("keydown", (event) => {

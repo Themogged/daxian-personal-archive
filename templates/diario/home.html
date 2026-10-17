@@ -16,8 +16,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Noto+Sans+KR:wght@400;500&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'diario/css/site.css' %}?v=20261013">
-    <script defer src="{% static 'diario/js/site.js' %}?v=20261013"></script>
+    <link rel="stylesheet" href="{% static 'diario/css/site.css' %}?v=20261016">
+    <script defer src="{% static 'diario/js/site.js' %}?v=20261016"></script>
     <title>{{ site.name }} — {{ site.descriptor }}</title>
   </head>
   <body>
@@ -46,16 +46,16 @@
       <section class="opening" id="top" aria-labelledby="letter-title">
         <div class="opening__letter-wrap">
           <article class="love-letter" id="letter">
-            <span class="love-letter__heart" aria-hidden="true">♡</span>
+            <span class="love-letter__mark" aria-hidden="true"><b>D</b><small>01</small></span>
             <p class="love-letter__edition"><span>PRIVATE EDITION</span><i aria-hidden="true"></i><span>01 · 2026</span></p>
             <p class="soft-label">A LETTER / FOR DAXIAN</p>
             <p class="love-letter__korean" lang="ko">마음을 담아, Daxian에게.</p>
             <h1 id="letter-title">For the moments<br><em>that stay.</em></h1>
             <div class="love-letter__body">
               <p class="love-letter__hello">Daxian,</p>
-              <p>Some moments feel small while they are happening, but they stay with us in a way that is impossible to forget—a look, a laugh, a song, or simply being close.</p>
-              <p>With you, appreciating the little things feels easy. They do not need to be perfect or extraordinary. The softest memories are often the simplest, and I love knowing they are ours.</p>
-              <p>These photographs and this song hold only a small part of what I feel. Still, I hope they remind you that every shared moment has a place in my heart.</p>
+              <p>Some moments seem small when they happen. Later, they become the ones that are impossible to forget—a look, a laugh, a song, or simply sharing a little time together.</p>
+              <p>You made it easy to appreciate the little things. Nothing had to be perfect. Even the most ordinary moments felt worth keeping, simply because they carried something of you.</p>
+              <p>Maybe some feelings are not meant to become a life we can hold. Even so, what I felt was real to me, and these photographs, little things, and this song still carry a piece of it.</p>
               <p class="love-letter__closing">This is with love, straight from me to you; simply, it is my heart.</p>
             </div>
             <div class="love-letter__signature">
@@ -68,12 +68,30 @@
         <figure class="opening__portrait" data-portrait>
           <img src="{% static 'diario/images/5041922874431704499.jpg' %}" width="1081" height="1458" fetchpriority="high" alt="Daxian holding a black rabbit plush toy">
           <figcaption><span>one of the moments I keep close</span><i aria-hidden="true">♡</i></figcaption>
-          <div class="opening__note" aria-hidden="true">you make ordinary days<br>feel worth keeping.</div>
+          <div class="opening__note" aria-hidden="true">you made ordinary moments<br>feel worth keeping.</div>
         </figure>
         <a class="opening__scroll" href="#handwritten">keep reading <span aria-hidden="true">↓</span></a>
       </section>
 
-      <section class="handwritten" id="handwritten" aria-labelledby="handwritten-title">
+      <section class="archive-index" aria-label="A private archive made for Daxian">
+        <div class="archive-index__marquee" aria-hidden="true">
+          <div class="archive-index__track">
+            <span>19 photographs</span><i>✦</i><span>one handwritten page</span><i>✦</i><span>one song</span><i>✦</i><span>made for Daxian</span><i>✦</i>
+            <span>19 photographs</span><i>✦</i><span>one handwritten page</span><i>✦</i><span>one song</span><i>✦</i><span>made for Daxian</span><i>✦</i>
+          </div>
+        </div>
+        <div class="archive-index__details section reveal">
+          <p><span>PRIVATE ARCHIVE</span><small>VOL. 01 · 2026</small></p>
+          <blockquote>“The smallest moments<br>became the ones I kept.”</blockquote>
+          <dl>
+            <div><dt>Letter</dt><dd>from my heart</dd></div>
+            <div><dt>Language</dt><dd>love, softly</dd></div>
+            <div><dt>For</dt><dd>Daxian</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="handwritten" id="handwritten" aria-labelledby="handwritten-title" data-chapter="01">
         <div class="handwritten__inner section">
           <div class="handwritten__intro reveal">
             <p class="soft-label">ONE PAGE / KEPT CLOSE</p>
@@ -87,11 +105,11 @@
             <button type="button" class="photo-trigger handwritten__trigger" aria-label="Open the handwritten letter" aria-describedby="handwritten-transcript-label">
               <img src="{% static 'diario/images/handwritten-mon-amour.png' %}" loading="lazy" decoding="async" width="1086" height="1448" alt="Handwritten French letter titled Mon amour irréel, decorated with pink stars and a bow">
             </button>
-            <figcaption><span>the page that says what silence could not.</span><i aria-hidden="true">♡</i></figcaption>
+            <figcaption><span>a page for what I could never quite say out loud.</span><i aria-hidden="true">✦</i></figcaption>
           </figure>
 
           <div class="handwritten__note reveal">
-            <p>Written slowly and kept close. Every line holds a feeling that never really left.</p>
+            <p>Some feelings never find a place in real life, so they live in the pages we keep. This one is still part of me.</p>
             <span>pour toi, toujours <i aria-hidden="true">♡</i></span>
             <details class="handwritten__transcript">
               <summary id="handwritten-transcript-label">Read the handwritten words</summary>
@@ -101,7 +119,7 @@
         </div>
       </section>
 
-      <section class="keepsakes section" id="memories" aria-labelledby="keepsakes-title">
+      <section class="keepsakes section" id="memories" aria-labelledby="keepsakes-title" data-chapter="02">
         <div class="section-intro reveal">
           <div>
             <p class="soft-label">THE LITTLE THINGS I KEEP</p>
@@ -121,8 +139,8 @@
             </figure>
             <div class="keepsake-card__copy">
               <span>01</span>
-              <h3>The little details I still remember.</h3>
-              <p>Sometimes, one small thing brings the whole moment back.</p>
+              <h3>A small detail, a whole memory.</h3>
+              <p>Sometimes one little thing is enough to bring everything back.</p>
             </div>
           </article>
 
@@ -132,8 +150,8 @@
             </figure>
             <div class="keepsake-card__copy">
               <span>02</span>
-              <h3>The things that start to feel like home.</h3>
-              <p>Some little things feel familiar because they remind me of you.</p>
+              <h3>The little friend that became part of the story.</h3>
+              <p>Some things become precious because of who they make us think of.</p>
             </div>
           </article>
 
@@ -143,14 +161,14 @@
             </figure>
             <div class="keepsake-card__copy">
               <span>03</span>
-              <h3>The ordinary days I still think about.</h3>
-              <p>Nothing extraordinary—just a moment I am glad we had.</p>
+              <h3>An ordinary day I would choose again.</h3>
+              <p>Nothing grand—just one of those moments that became impossible to forget.</p>
             </div>
           </article>
         </div>
       </section>
 
-      <section class="photography" id="photography" aria-labelledby="photos-title">
+      <section class="photography" id="photography" aria-labelledby="photos-title" data-chapter="03">
         <div class="section photo-heading reveal">
           <p class="soft-label">OUR SOFT ARCHIVE</p>
           <h2 id="photos-title">Moments I never<br><em>want to lose.</em></h2>
@@ -241,30 +259,34 @@
         </div>
       </section>
 
-      <section class="song-section" id="soundtrack" aria-labelledby="song-title">
+      <section class="song-section" id="soundtrack" aria-labelledby="song-title" data-chapter="04">
         <div class="song-section__inner reveal">
           <div class="song-section__copy">
             <p class="soft-label">THE SONG BETWEEN THESE PAGES</p>
             <p class="song-section__korean" lang="ko">당신을 향한 나의 사랑</p>
             <h2 id="song-title">Let this song<br><em>say the rest.</em></h2>
-            <p>It has been here from the beginning, beside every photograph and every memory.</p>
-            <button class="song-button" type="button" data-toggle-audio aria-label="Play our song">
+            <p>I chose it because some feelings are easier to hear than to explain. Let it stay beside these photographs for a while.</p>
+            <button class="song-button" type="button" data-toggle-audio aria-label="Play our song" aria-controls="archive-audio" aria-pressed="false">
               <span class="song-button__icon" aria-hidden="true">▶</span>
               <span><small>OUR SONG</small><strong>Play from the heart</strong></span>
             </button>
+            <div class="song-wave" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
           </div>
           <div class="song-vinyl" aria-hidden="true">
             <div class="song-vinyl__disc"><span>♥</span></div>
             <p>for Daxian<br><em>avec amour</em></p>
+            <span class="song-vinyl__edition">PRIVATE PRESSING · 01</span>
           </div>
         </div>
       </section>
 
       <section class="closing reveal" aria-labelledby="closing-title">
-        <span aria-hidden="true">♡</span>
+        <div class="closing__seal" aria-hidden="true"><strong>D</strong><span>PERSONAL ARCHIVE</span><small>2026 · WITH LOVE</small></div>
         <p lang="ko">잊을 수 없는 순간들을 위해.</p>
         <h2 id="closing-title">Keep this close.</h2>
-        <p>For all the moments that were easy to love<br>and impossible to forget.</p>
+        <p>For the little moments that were easy to love,<br>and the feeling that was impossible to forget.</p>
         <a href="#letter">read the letter again <i aria-hidden="true">↑</i></a>
       </section>
     </main>
@@ -279,12 +301,13 @@
       <audio id="archive-audio" autoplay playsinline preload="auto">
         <source src="{% static 'diario/audio/love-song.mp3' %}" type="audio/mpeg">
       </audio>
-      <button class="music-player__toggle" type="button" data-toggle-audio aria-label="Play our song"><span aria-hidden="true">▶</span></button>
+      <button class="music-player__toggle" type="button" data-toggle-audio aria-label="Play our song" aria-controls="archive-audio" aria-pressed="false"><span aria-hidden="true">▶</span></button>
       <div class="music-player__details">
         <span data-audio-kicker role="status" aria-live="polite">STARTING SOFTLY</span>
-        <strong>당신을 향한 나의 사랑</strong>
+        <strong lang="ko">당신을 향한 나의 사랑</strong>
         <div class="music-player__timeline">
-          <div class="music-player__progress" aria-hidden="true"><span id="audio-progress"></span></div>
+          <label class="sr-only" for="audio-seek">Song progress</label>
+          <input class="music-player__seek" id="audio-seek" type="range" min="0" max="100" value="0" step="0.1" aria-label="Song progress">
           <time id="audio-time">0:00</time>
         </div>
       </div>
@@ -307,7 +330,7 @@
       <button class="lightbox__close" type="button" data-close-lightbox aria-label="Close image">×</button>
       <button class="lightbox__nav lightbox__nav--previous" type="button" data-lightbox-previous aria-label="Previous image">←</button>
       <figure class="lightbox__figure">
-        <img id="lightbox-image" src="" alt="">
+        <img id="lightbox-image" alt="">
         <figcaption class="lightbox__meta">
           <span id="lightbox-counter">01 / 16</span>
           <span><strong id="lightbox-title">A kept moment</strong><small id="lightbox-caption"></small></span>

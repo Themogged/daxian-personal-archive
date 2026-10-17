@@ -16,6 +16,9 @@ class PublicPagesTests(TestCase):
         self.assertContains(response, "PRIVATE EDITION")
         self.assertContains(response, "avec tout mon cœur")
         self.assertContains(response, "This is with love, straight from me to you; simply, it is my heart.")
+        self.assertContains(response, "Maybe some feelings are not meant to become a life we can hold.")
+        self.assertContains(response, 'class="archive-index"')
+        self.assertContains(response, "19 photographs")
         self.assertContains(response, 'id="handwritten"')
         self.assertContains(response, "handwritten-mon-amour.png")
         self.assertContains(response, "Some feelings deserve")
@@ -24,7 +27,8 @@ class PublicPagesTests(TestCase):
         self.assertContains(response, 'id="page-progress-bar"')
         self.assertContains(response, 'id="lightbox-counter"')
         self.assertContains(response, 'aria-expanded="false"')
-        self.assertContains(response, "site.css?v=20261013", html=False)
+        self.assertContains(response, "site.css?v=20261016", html=False)
+        self.assertContains(response, "site.js?v=20261016", html=False)
         self.assertEqual(response.content.count(b"diario/images/"), 21)
         self.assertNotContains(response, "5041922874431704504.jpg")
         self.assertLess(
@@ -43,6 +47,12 @@ class PublicPagesTests(TestCase):
         self.assertContains(response, 'aria-labelledby="lightbox-title"')
         self.assertContains(response, 'aria-describedby="lightbox-caption"')
         self.assertContains(response, 'aria-live="polite"')
+        self.assertContains(response, 'id="audio-seek"')
+        self.assertContains(response, 'aria-controls="archive-audio"', count=2)
+        self.assertContains(response, 'aria-pressed="false"', count=2)
+        self.assertNotContains(response, 'id="lightbox-image" src=""')
+        self.assertContains(response, 'class="song-wave"')
+        self.assertContains(response, 'class="closing__seal"')
         self.assertContains(response, "ONE PAGE / KEPT CLOSE")
 
     def test_search_engine_files_are_available(self):
