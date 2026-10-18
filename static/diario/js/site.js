@@ -23,6 +23,13 @@
   const lightboxCaption = document.getElementById("lightbox-caption");
   const lightboxCounter = document.getElementById("lightbox-counter");
   const photoItems = Array.from(document.querySelectorAll("[data-photo]"));
+  const filmButton = document.querySelector("[data-play-film]");
+  const filmControls = document.querySelector("[data-film-controls]");
+  const filmToggle = document.querySelector("[data-toggle-film]");
+  const filmAction = document.querySelector("[data-film-action]");
+  const filmProgress = document.querySelector("[data-film-progress]");
+  const firstFilmIndex = photoItems.findIndex((item) => item.closest(".photo-grid"));
+  const filmDuration = 6500;
   const revealItems = Array.from(document.querySelectorAll(".reveal"));
   const navLinks = Array.from(document.querySelectorAll("[data-section-link]"));
   const navSections = navLinks.map((link) => document.querySelector(link.getAttribute("href")));
@@ -41,6 +48,10 @@
   let portraitFrame = null;
   let playerCollapseTimer = null;
   let activeNavIndex = -1;
+  let filmMode = false;
+  let filmPlaying = false;
+  let filmTimer = null;
+  let filmProgressAnimation = null;
 
   const focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])';
   const unlockEvents = ["pointerdown", "touchstart", "keydown"];
@@ -259,6 +270,7 @@
 
   function closeOverlay(overlay = activeOverlay, restoreFocus = true) {
     if (!overlay) return;
+    if (overlay === lightbox) stopFilm();
     overlay.classList.remove("is-open");
     if (activeOverlay === overlay) activeOverlay = null;
     if (!activeOverlay) {
@@ -296,6 +308,55 @@
     image.src = source;
   }
 
+  function updateFilmInterface() {
+    if (filmControls) filmControls.hidden = !filmMode;
+    lightbox?.classList.toggle("is-filming", filmMode);
+    if (!filmToggle) return;
+    filmToggle.setAttribute("aria-pressed", String(filmPlaying));
+    filmToggle.setAttribute("aria-label", filmPlaying ? "Pause memory film" : "Resume memory film");
+    const icon = filmToggle.querySelector("[aria-hidden='true']");
+    if (icon) icon.textContent = filmPlaying ? "Ⅱ" : "▶";
+    if (filmAction) filmAction.textContent = filmPlaying ? "Pause" : "Resume";
+  }
+
+  function clearFilmTimer() {
+    window.clearTimeout(filmTimer);
+    filmTimer = null;
+    filmProgressAnimation?.cancel();
+    filmProgressAnimation = null;
+  }
+
+  function stopFilm() {
+    clearFilmTimer();
+    filmMode = false;
+    filmPlaying = false;
+    updateFilmInterface();
+  }
+
+  function scheduleFilmFrame() {
+    clearFilmTimer();
+    if (!filmMode || !filmPlaying || activeOverlay !== lightbox || document.hidden) return;
+    if (filmProgress?.animate && !reduceMotion.matches) {
+      filmProgressAnimation = filmProgress.animate(
+        [{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }],
+        { duration: filmDuration, easing: "linear", fill: "forwards" },
+      );
+    }
+    filmTimer = window.setTimeout(() => moveLightbox(1), filmDuration);
+  }
+
+  function startFilm() {
+    if (firstFilmIndex < 0) return;
+    filmMode = true;
+    filmPlaying = true;
+    activePhotoIndex = firstFilmIndex;
+    renderLightbox();
+    updateFilmInterface();
+    openOverlay(lightbox, filmButton);
+    startAudio();
+    scheduleFilmFrame();
+  }
+
   function renderLightbox() {
     if (!photoItems.length || !lightboxImage || !lightboxCaption || !lightboxTitle || !lightboxCounter) return;
     activePhotoIndex = (activePhotoIndex + photoItems.length) % photoItems.length;
@@ -314,14 +375,21 @@
   }
 
   function openLightbox(photo, trigger) {
+    stopFilm();
     activePhotoIndex = Math.max(0, photoItems.indexOf(photo));
     renderLightbox();
     openOverlay(lightbox, trigger);
   }
 
   function moveLightbox(direction) {
-    activePhotoIndex += direction;
+    if (filmMode && firstFilmIndex >= 0) {
+      const filmLength = photoItems.length - firstFilmIndex;
+      activePhotoIndex = firstFilmIndex + ((activePhotoIndex - firstFilmIndex + direction + filmLength) % filmLength);
+    } else {
+      activePhotoIndex += direction;
+    }
     renderLightbox();
+    if (filmPlaying) scheduleFilmFrame();
   }
 
   function initializeReveals() {
@@ -452,6 +520,18 @@
     if (!trigger) return;
     if (!trigger.hasAttribute("aria-label")) trigger.setAttribute("aria-label", `Open image: ${photo.dataset.title || "kept moment"}`);
     trigger.addEventListener("click", () => openLightbox(photo, trigger));
+  });
+  filmButton?.addEventListener("click", startFilm);
+  filmToggle?.addEventListener("click", () => {
+    filmPlaying = !filmPlaying;
+    updateFilmInterface();
+    scheduleFilmFrame();
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden || !filmPlaying) return;
+    filmPlaying = false;
+    updateFilmInterface();
+    clearFilmTimer();
   });
   document.querySelector("[data-close-lightbox]")?.addEventListener("click", () => closeOverlay(lightbox));
   document.querySelector("[data-lightbox-previous]")?.addEventListener("click", () => moveLightbox(-1));
