@@ -443,7 +443,7 @@ body.audio-playing .song-vinyl__disc { animation: spin 14s linear infinite; }
 .overlay-dialog, .lightbox { position: fixed; z-index: 300; inset: 0; min-height: 100vh; min-height: 100dvh; overflow-y: auto; background: rgba(69, 35, 43, .98); color: #fff; opacity: 0; pointer-events: none; transition: opacity .3s ease; }
 .overlay-dialog.is-open, .lightbox.is-open { opacity: 1; pointer-events: auto; }
 .overlay-dialog a:focus-visible, .overlay-dialog button:focus-visible, .lightbox button:focus-visible { outline-color: var(--butter); }
-.overlay-dialog { visibility: hidden; }
+.overlay-dialog { visibility: hidden; background: #45232b; }
 .overlay-dialog.is-open { visibility: visible; }
 .dialog-close, .lightbox__close { position: absolute; z-index: 2; top: 1.3rem; right: 1.3rem; display: grid; width: 3rem; height: 3rem; place-items: center; border: 1px solid rgba(255,255,255,.28); border-radius: 50%; background: transparent; color: #fff; font-family: var(--serif); font-size: 1.8rem; line-height: 1; }
 .dialog-nav { display: flex; min-height: 100dvh; flex-direction: column; justify-content: center; padding: 5.5rem max(2rem, 11vw); }

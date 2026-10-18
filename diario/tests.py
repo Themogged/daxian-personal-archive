@@ -30,8 +30,8 @@ class PublicPagesTests(TestCase):
         self.assertContains(response, 'data-toggle-film')
         self.assertContains(response, 'data-film-progress')
         self.assertContains(response, 'aria-expanded="false"')
-        self.assertContains(response, "site.css?v=20261017", html=False)
-        self.assertContains(response, "site.js?v=20261017", html=False)
+        self.assertContains(response, "site.css?v=20261018", html=False)
+        self.assertContains(response, "site.js?v=20261018", html=False)
         self.assertEqual(response.content.count(b"diario/images/"), 21)
         self.assertNotContains(response, "5041922874431704504.jpg")
         self.assertLess(
