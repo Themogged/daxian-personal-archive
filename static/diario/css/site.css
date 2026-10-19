@@ -346,8 +346,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--rose-deep); out
 .photo-grid:not(.photo-grid--companions) .photo-item:nth-child(2) { grid-column: span 7; padding-top: 4.5rem; }
 .photo-grid:not(.photo-grid--companions) .photo-item:nth-child(6),
 .photo-grid:not(.photo-grid--companions) .photo-item:nth-child(7) { grid-column: span 6; }
-.photo-grid:not(.photo-grid--companions) .photo-item:nth-child(8) { grid-column: span 5; }
-.photo-grid:not(.photo-grid--companions) .photo-item:nth-child(9) { grid-column: span 7; padding-top: 3rem; }
+.photo-grid:not(.photo-grid--companions) .photo-item:nth-child(8) { grid-column: 4 / span 6; }
 .photo-grid--companions .photo-item:nth-child(1), .photo-grid--companions .photo-item:nth-child(4) { grid-column: span 7; }
 .photo-grid--companions .photo-item:nth-child(2), .photo-grid--companions .photo-item:nth-child(3) { grid-column: span 5; }
 .photo-grid--companions .photo-item:nth-child(5), .photo-grid--companions .photo-item:nth-child(6) { grid-column: span 6; }
@@ -356,8 +355,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--rose-deep); out
 .photo-trigger img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2,.6,.3,1), filter .45s ease; }
 .photo-trigger:hover img { filter: saturate(1.04); transform: scale(1.025); }
 .photo-trigger:hover::after, .photo-trigger:focus-visible::after { opacity: 1; transform: none; }
-.photo-grid:not(.photo-grid--companions) .photo-item:nth-child(2) .photo-trigger,
-.photo-grid:not(.photo-grid--companions) .photo-item:nth-child(9) .photo-trigger { aspect-ratio: 16 / 10; }
+.photo-grid:not(.photo-grid--companions) .photo-item:nth-child(2) .photo-trigger { aspect-ratio: 16 / 10; }
+.photo-grid:not(.photo-grid--companions) .photo-item:nth-child(8) .photo-trigger { aspect-ratio: 4 / 3; }
 .photo-grid--companions .photo-item:nth-child(2) .photo-trigger,
 .photo-grid--companions .photo-item:nth-child(3) .photo-trigger { aspect-ratio: 1; }
 .photo-grid--companions .photo-item { transition: transform .45s cubic-bezier(.2,.7,.2,1); }
@@ -555,6 +554,7 @@ body.audio-playing .song-vinyl__disc { animation: spin 14s linear infinite; }
   .photo-grid:not(.photo-grid--companions) .photo-item:nth-child(1),
   .photo-grid:not(.photo-grid--companions) .photo-item:nth-child(4),
   .photo-grid:not(.photo-grid--companions) .photo-item:nth-child(7),
+  .photo-grid:not(.photo-grid--companions) .photo-item:nth-child(8),
   .photo-grid--companions .photo-item:nth-child(1),
   .photo-grid--companions .photo-item:nth-child(4) { grid-column: 1 / -1; }
   .song-section { padding-right: 1.2rem; padding-left: 1.2rem; }
