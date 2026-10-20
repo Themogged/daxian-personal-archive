@@ -18,9 +18,9 @@ class PublicPagesTests(TestCase):
         self.assertContains(response, "This is with love, straight from me to you; simply, it is my heart.")
         self.assertContains(response, "Maybe some feelings are not meant to become a life we can hold.")
         self.assertContains(response, 'class="archive-index"')
-        self.assertContains(response, "18 photographs")
-        self.assertContains(response, "14 moments · with our song")
-        self.assertContains(response, "eighteen photographs")
+        self.assertContains(response, "23 photographs")
+        self.assertContains(response, "19 moments · with our song")
+        self.assertContains(response, "twenty-three photographs")
         self.assertContains(response, 'id="handwritten"')
         self.assertContains(response, "handwritten-mon-amour.png")
         self.assertContains(response, "Some feelings deserve")
@@ -32,10 +32,18 @@ class PublicPagesTests(TestCase):
         self.assertContains(response, 'data-toggle-film')
         self.assertContains(response, 'data-film-progress')
         self.assertContains(response, 'aria-expanded="false"')
-        self.assertContains(response, "site.css?v=20261019", html=False)
+        self.assertContains(response, "site.css?v=20261019-2", html=False)
         self.assertContains(response, "site.js?v=20261018-2", html=False)
-        self.assertEqual(response.content.count(b"diario/images/"), 20)
-        self.assertEqual(response.content.count(b'class="photo-item reveal"'), 14)
+        self.assertEqual(response.content.count(b"diario/images/"), 25)
+        self.assertEqual(response.content.count(b'class="photo-item'), 19)
+        for filename in (
+            "5095980453805624465.jpg",
+            "5095980453805624466.jpg",
+            "5095980453805624472.jpg",
+            "5095980453805624467-soft-focus.jpg",
+            "5095980453805624468-soft-focus.jpg",
+        ):
+            self.assertContains(response, filename)
         self.assertNotContains(response, "5041922874431704504.jpg")
         self.assertNotContains(response, "5041922874431704505.jpg")
         self.assertLess(
