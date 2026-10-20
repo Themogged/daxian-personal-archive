@@ -523,6 +523,17 @@
     if (!trigger.hasAttribute("aria-label")) trigger.setAttribute("aria-label", `Open image: ${photo.dataset.title || "kept moment"}`);
     trigger.addEventListener("click", () => openLightbox(photo, trigger));
   });
+
+  function preventImageSaveGesture(event) {
+    if (event.target instanceof HTMLImageElement) event.preventDefault();
+  }
+
+  document.querySelectorAll("img").forEach((image) => {
+    image.draggable = false;
+  });
+  document.addEventListener("contextmenu", preventImageSaveGesture, true);
+  document.addEventListener("dragstart", preventImageSaveGesture, true);
+
   filmButton?.addEventListener("click", startFilm);
   filmToggle?.addEventListener("click", () => {
     filmPlaying = !filmPlaying;
