@@ -367,11 +367,11 @@
     lightboxImage.alt = image.alt;
     lightboxTitle.textContent = photo.dataset.title || "A kept moment";
     lightboxCaption.textContent = photo.dataset.caption || image.alt;
-    const filmIndex = filmMode && firstFilmIndex >= 0;
-    const position = filmIndex ? activePhotoIndex - firstFilmIndex + 1 : activePhotoIndex + 1;
-    const total = filmIndex ? photoItems.length - firstFilmIndex : photoItems.length;
-    const counter = `${String(position).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
-    lightboxCounter.textContent = isHandwritten ? `SPECIAL PAGE · ${counter}` : counter;
+    const position = activePhotoIndex - firstFilmIndex + 1;
+    const total = photoItems.length - firstFilmIndex;
+    lightboxCounter.textContent = isHandwritten
+      ? "SPECIAL PAGE"
+      : `${String(position).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
     preloadNeighbor(activePhotoIndex - 1);
     preloadNeighbor(activePhotoIndex + 1);
   }
