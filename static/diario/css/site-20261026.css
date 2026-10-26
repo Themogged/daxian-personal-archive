@@ -616,7 +616,7 @@ body.audio-playing .song-vinyl__disc { animation: spin 14s linear infinite; }
   .opening__portrait figcaption { right: .9rem; bottom: .35rem; left: .9rem; font-size: 1.25rem; }
   .opening__note { top: 1rem; right: -.35rem; font-size: 1.2rem; }
   .opening__sticker { bottom: 5.5rem; left: -.75rem; width: 5.5rem; font-size: 1.1rem; }
-  .opening__flower { right: -.75rem; bottom: .6rem; width: 5rem; }
+  .opening__flower { right: .5rem; bottom: .6rem; width: 5rem; }
   .love-letter::after { left: 37%; width: 4.5rem; height: 1.5rem; }
   .love-letter__doodle { width: 4rem; margin-bottom: -1.4rem; }
   .archive-index__details { grid-template-columns: 1fr; gap: 2rem; }
