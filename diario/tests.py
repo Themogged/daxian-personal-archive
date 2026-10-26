@@ -32,7 +32,7 @@ class PublicPagesTests(TestCase):
         self.assertContains(response, 'data-toggle-film')
         self.assertContains(response, 'data-film-progress')
         self.assertContains(response, 'aria-expanded="false"')
-        self.assertContains(response, "site-20261020.css", html=False)
+        self.assertContains(response, "site-20261026.css", html=False)
         self.assertContains(response, "archive-20261020.js", html=False)
         self.assertContains(response, '<span id="lightbox-counter">01 / 19</span>')
         self.assertEqual(response.content.count(b"diario/images/"), 25)

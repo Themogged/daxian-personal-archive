@@ -15,14 +15,36 @@
     <link rel="icon" href="{% static 'diario/favicon.svg' %}" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Noto+Sans+KR:wght@400;500&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'diario/css/site-20261020.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Manrope:wght@400;500;600&family=Noto+Sans+KR:wght@400;500&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'diario/css/site-20261026.css' %}">
     <script defer src="{% static 'diario/js/archive-20261020.js' %}"></script>
     <title>{{ site.name }} — {{ site.descriptor }}</title>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to the letter</a>
     <div class="page-progress" aria-hidden="true"><span id="page-progress-bar"></span></div>
+    <svg class="doodle-symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <symbol id="doodle-flower" viewBox="0 0 180 188">
+        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke-width="2.7" d="M88 80c-25-4-27-20-16-27 8-6 19-1 23 11-8-20 1-31 13-28 12 3 13 19 3 30 14-15 30-13 33-2 4 13-9 24-27 22 18 5 25 19 16 28-10 10-25 3-30-14 3 19-9 30-20 24-11-6-10-20 1-31-17 12-32 8-34-5-1-11 12-19 28-16Z"/>
+          <path stroke-width="2.4" d="M95 91c4-6 12-6 16-1 4 6-1 14-8 15-7 0-12-8-8-14Zm8 13c4 22 0 51-15 78m14-35c13-14 25-14 34-10-6 13-18 20-34 19m-6 7c-12-14-22-16-31-12 6 14 16 20 28 21"/>
+          <path stroke-width="1.8" d="m36 35 2 10 9 3-9 3-2 10-3-10-8-3 8-3 3-10Zm110 74 2 8 7 2-7 3-2 8-3-8-7-3 7-2 3-8Z"/>
+          <path stroke-width="1.8" d="M147 34c4-8 13-5 12 2-1 6-7 11-13 15-6-4-11-9-11-15 0-7 9-10 12-2Z"/>
+        </g>
+      </symbol>
+      <symbol id="doodle-heart" viewBox="0 0 190 160">
+        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke-width="3" d="M95 133C67 111 29 82 31 51c1-19 20-30 37-23 12 4 20 15 27 27 9-20 20-30 37-28 19 3 29 22 23 40-7 22-34 47-60 66Z"/>
+          <path stroke-width="1.6" d="M34 49c2-11 12-17 22-16m96 34c-4 15-14 25-24 35m-105 20 2 8 8 2-8 3-2 8-3-8-8-3 8-2 3-8Zm144-106 2 9 8 2-8 3-2 8-3-8-8-3 8-2 3-9Z"/>
+        </g>
+      </symbol>
+      <symbol id="doodle-sparkles" viewBox="0 0 180 90">
+        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke-width="2.3" d="m33 13 5 19 16 5-16 5-5 19-5-19-16-5 16-5 5-19Zm93 7 4 14 13 4-13 4-4 15-4-15-13-4 13-4 4-14Zm36 39 2 7 7 2-7 2-2 7-2-7-7-2 7-2 2-7Z"/>
+          <path stroke-width="1.6" d="M65 72c16-7 26-8 40-4m-38 9c14-5 24-5 33-3"/>
+        </g>
+      </symbol>
+    </svg>
 
     <header class="site-header" id="site-header">
       <a class="brand" href="#top" aria-label="{{ site.name }}, back to the beginning">
@@ -44,6 +66,7 @@
 
     <main id="main-content">
       <section class="opening" id="top" aria-labelledby="letter-title">
+        <svg class="opening__flower doodle" viewBox="0 0 180 188" aria-hidden="true" focusable="false"><use href="#doodle-flower"></use></svg>
         <div class="opening__letter-wrap">
           <article class="love-letter" id="letter">
             <span class="love-letter__mark" aria-hidden="true"><b>D</b><small>01</small></span>
@@ -62,6 +85,7 @@
               <span aria-hidden="true">♥</span>
               <p><em>avec tout mon cœur</em><small>just for you</small></p>
             </div>
+            <svg class="love-letter__doodle doodle" viewBox="0 0 180 90" aria-hidden="true" focusable="false"><use href="#doodle-sparkles"></use></svg>
           </article>
         </div>
 
@@ -69,6 +93,7 @@
           <img src="{% static 'diario/images/5041922874431704499.jpg' %}" width="1081" height="1458" fetchpriority="high" alt="Daxian holding a black rabbit plush toy">
           <figcaption><span>one of the moments I keep close</span><i aria-hidden="true">♡</i></figcaption>
           <div class="opening__note" aria-hidden="true">you made ordinary moments<br>feel worth keeping.</div>
+          <span class="opening__sticker" aria-hidden="true">a little<br>piece of us <i>♡</i></span>
         </figure>
         <a class="opening__scroll" href="#handwritten">keep reading <span aria-hidden="true">↓</span></a>
       </section>
@@ -93,6 +118,7 @@
 
       <section class="handwritten" id="handwritten" aria-labelledby="handwritten-title" data-chapter="01">
         <div class="handwritten__inner section">
+          <svg class="handwritten__sketch doodle" viewBox="0 0 190 160" aria-hidden="true" focusable="false"><use href="#doodle-heart"></use></svg>
           <div class="handwritten__intro reveal">
             <p class="soft-label">ONE PAGE / KEPT CLOSE</p>
             <p class="handwritten__french" lang="fr">Mon amour irréel</p>
@@ -120,6 +146,7 @@
       </section>
 
       <section class="keepsakes section" id="memories" aria-labelledby="keepsakes-title" data-chapter="02">
+        <svg class="keepsakes__sketch doodle" viewBox="0 0 180 188" aria-hidden="true" focusable="false"><use href="#doodle-flower"></use></svg>
         <div class="section-intro reveal">
           <div>
             <p class="soft-label">THE LITTLE THINGS I KEEP</p>
@@ -170,6 +197,7 @@
 
       <section class="photography" id="photography" aria-labelledby="photos-title" data-chapter="03">
         <div class="section photo-heading reveal">
+          <svg class="photo-heading__sketch doodle" viewBox="0 0 180 90" aria-hidden="true" focusable="false"><use href="#doodle-sparkles"></use></svg>
           <p class="soft-label">OUR SOFT ARCHIVE</p>
           <h2 id="photos-title">Moments I never<br><em>want to lose.</em></h2>
           <div class="photo-heading__note">
@@ -304,6 +332,7 @@
       </section>
 
       <section class="closing reveal" aria-labelledby="closing-title">
+        <svg class="closing__sketch doodle" viewBox="0 0 190 160" aria-hidden="true" focusable="false"><use href="#doodle-heart"></use></svg>
         <div class="closing__seal" aria-hidden="true"><strong>D</strong><span>PERSONAL ARCHIVE</span><small>2026 · WITH LOVE</small></div>
         <p lang="ko">잊을 수 없는 순간들을 위해.</p>
         <h2 id="closing-title">Keep this close.</h2>
