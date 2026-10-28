@@ -138,9 +138,9 @@
     const startVolume = audio.volume;
     const startedAt = performance.now();
     const step = (now) => {
-      const elapsed = Math.min(1, (now - startedAt) / duration);
+      const elapsed = Math.max(0, Math.min(1, (now - startedAt) / duration));
       const eased = 1 - ((1 - elapsed) ** 3);
-      audio.volume = Math.min(1, startVolume + ((target - startVolume) * eased));
+      audio.volume = Math.max(0, Math.min(1, startVolume + ((target - startVolume) * eased)));
       if (elapsed < 1) volumeAnimation = window.requestAnimationFrame(step);
       else volumeAnimation = null;
     };
@@ -440,11 +440,40 @@
     });
   }
 
+  function initializePhotoDepth() {
+    if (reduceMotion.matches || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+    document.querySelectorAll(".photo-grid .photo-trigger").forEach((trigger) => {
+      let frame = null;
+
+      trigger.addEventListener("pointermove", (event) => {
+        const bounds = trigger.getBoundingClientRect();
+        if (!bounds.width || !bounds.height) return;
+        const x = (event.clientX - bounds.left) / bounds.width - .5;
+        const y = (event.clientY - bounds.top) / bounds.height - .5;
+        if (frame) window.cancelAnimationFrame(frame);
+        frame = window.requestAnimationFrame(() => {
+          trigger.style.setProperty("--photo-tilt-x", `${(-y * 4).toFixed(2)}deg`);
+          trigger.style.setProperty("--photo-tilt-y", `${(x * 4).toFixed(2)}deg`);
+          frame = null;
+        });
+      }, { passive: true });
+
+      trigger.addEventListener("pointerleave", () => {
+        if (frame) window.cancelAnimationFrame(frame);
+        trigger.style.removeProperty("--photo-tilt-x");
+        trigger.style.removeProperty("--photo-tilt-y");
+        frame = null;
+      });
+    });
+  }
+
   if (menuDialog) setInert(menuDialog, true);
   if (lightbox) setInert(lightbox, true);
   updateHeaderAndProgress();
   initializeReveals();
   initializePortraitMotion();
+  initializePhotoDepth();
   window.requestAnimationFrame(() => body.classList.add("is-ready"));
 
   if (audio) audio.volume = 0;
