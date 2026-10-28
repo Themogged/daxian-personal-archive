@@ -455,6 +455,8 @@
         frame = window.requestAnimationFrame(() => {
           trigger.style.setProperty("--photo-tilt-x", `${(-y * 4).toFixed(2)}deg`);
           trigger.style.setProperty("--photo-tilt-y", `${(x * 4).toFixed(2)}deg`);
+          trigger.style.setProperty("--photo-shift-x", `${(x * 5).toFixed(2)}px`);
+          trigger.style.setProperty("--photo-shift-y", `${(y * 5).toFixed(2)}px`);
           frame = null;
         });
       }, { passive: true });
@@ -463,6 +465,8 @@
         if (frame) window.cancelAnimationFrame(frame);
         trigger.style.removeProperty("--photo-tilt-x");
         trigger.style.removeProperty("--photo-tilt-y");
+        trigger.style.removeProperty("--photo-shift-x");
+        trigger.style.removeProperty("--photo-shift-y");
         frame = null;
       });
     });

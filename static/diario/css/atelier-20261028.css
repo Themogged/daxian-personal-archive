@@ -1,4 +1,4 @@
-/* A quieter editorial layer over the original archive. */
+/* An illustrated paper archive: restrained type, warm mats, and inked frames. */
 :root {
   --rose: #956274;
   --rose-deep: #684953;
@@ -17,8 +17,8 @@
 
 body {
   background:
-    radial-gradient(circle at 8% 8%, rgba(219, 197, 161, .19), transparent 30rem),
-    radial-gradient(circle at 95% 42%, rgba(198, 165, 169, .12), transparent 36rem),
+    radial-gradient(circle at 8% 8%, rgba(219, 197, 161, .23), transparent 30rem),
+    radial-gradient(circle at 95% 42%, rgba(198, 165, 169, .16), transparent 36rem),
     #fbf8f1;
 }
 
@@ -28,17 +28,19 @@ body {
 
 .opening {
   background:
-    radial-gradient(ellipse at 80% 13%, rgba(219, 197, 161, .4), transparent 35%),
-    radial-gradient(ellipse at 9% 80%, rgba(231, 207, 208, .48), transparent 40%),
+    radial-gradient(ellipse at 80% 13%, rgba(219, 197, 161, .42), transparent 35%),
+    radial-gradient(ellipse at 9% 80%, rgba(231, 207, 208, .51), transparent 40%),
+    repeating-linear-gradient(90deg, transparent 0 calc(25% - 1px), rgba(110, 78, 79, .035) 25% calc(25% + 1px)),
     #f8f2eb;
 }
 .opening::before { color: rgba(149, 98, 116, .27); }
 .love-letter {
   border-color: rgba(104, 73, 83, .21);
   background:
+    radial-gradient(circle at 87% 9%, rgba(219, 197, 161, .11), transparent 18rem),
     repeating-linear-gradient(0deg, transparent 0 40px, rgba(108, 131, 146, .045) 41px 42px),
     #fffdfa;
-  box-shadow: .7rem .9rem 0 rgba(212, 180, 177, .3), 0 2rem 4.5rem rgba(56, 38, 42, .11);
+  box-shadow: .7rem .9rem 0 rgba(212, 180, 177, .32), 1.1rem 1.3rem 0 rgba(219, 197, 161, .16), 0 2rem 4.5rem rgba(56, 38, 42, .13);
 }
 .love-letter::before {
   inset: .45rem;
@@ -56,19 +58,21 @@ body {
 .love-letter__body { line-height: 1.83; }
 .opening__portrait {
   border: 0;
-  padding: .9rem .9rem 3.7rem;
+  padding: 1.05rem 1.05rem 3.7rem;
   background: #fffdfa;
-  box-shadow: 1.2rem 1.2rem 0 rgba(197, 164, 157, .3), var(--shadow);
+  box-shadow: 1.2rem 1.2rem 0 rgba(197, 164, 157, .32), 1.55rem 1.55rem 0 rgba(219, 197, 161, .18), var(--shadow);
 }
 .opening__portrait::before {
   position: absolute;
   z-index: 3;
-  inset: .22rem;
+  inset: .28rem;
   content: "";
-  background: url("../images/ink-frame.svg") center / 100% 100% no-repeat;
-  opacity: .7;
+  background: url("../images/botanical-frame.svg") center / 100% 100% no-repeat;
+  opacity: .87;
   pointer-events: none;
 }
+.opening__portrait figcaption { font-family: var(--serif); font-size: clamp(1rem, 1.4vw, 1.35rem); font-style: italic; }
+.opening__portrait figcaption i { color: var(--rose); }
 .opening__sticker { border: 1px solid rgba(104, 73, 83, .5); background: #eee0d9; box-shadow: 0 .6rem 1.5rem rgba(56, 38, 42, .11); }
 
 .archive-index { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: #fffcf7; }
@@ -105,28 +109,93 @@ body {
 }
 .handwritten__tape { background: rgba(219, 197, 161, .57); }
 
-.photography { background: radial-gradient(circle at 89% 15%, rgba(219, 197, 161, .18), transparent 25rem), #fbf8f1; }
-.photo-chapter--soft { border: 1px solid rgba(104, 73, 83, .19); background: linear-gradient(145deg, rgba(240, 228, 225, .64), rgba(248, 240, 234, .4)); }
-.chapter-title { border-bottom: 1px solid var(--line); }
-.photo-grid { perspective: 1100px; }
+.photography {
+  background:
+    radial-gradient(circle at 89% 15%, rgba(219, 197, 161, .22), transparent 25rem),
+    repeating-linear-gradient(90deg, transparent 0 calc(25% - 1px), rgba(110, 78, 79, .025) 25% calc(25% + 1px)),
+    #fbf8f1;
+}
+.photo-heading::before {
+  width: 10rem;
+  height: 2.4rem;
+  margin-bottom: 1.3rem;
+  background: url("../images/drawn-divider.svg") center / contain no-repeat;
+}
+.photo-heading h2 { letter-spacing: -.065em; }
+.photo-heading__note { line-height: 1.65; }
+.photo-chapter { position: relative; }
+.photo-chapter--soft {
+  border: 1px solid rgba(104, 73, 83, .18);
+  border-radius: .3rem;
+  background:
+    radial-gradient(circle at 8% 4%, rgba(255, 252, 247, .75), transparent 24rem),
+    linear-gradient(145deg, rgba(240, 228, 225, .8), rgba(248, 240, 234, .52));
+  box-shadow: .65rem .8rem 0 rgba(213, 181, 176, .24), inset 0 0 0 .6rem rgba(255, 253, 248, .3);
+}
+.chapter-title {
+  border-bottom: 1px solid rgba(104, 73, 83, .26);
+}
+.chapter-title::after {
+  position: absolute;
+  right: 0;
+  bottom: -3px;
+  left: 0;
+  height: 1px;
+  content: "";
+  background: rgba(104, 73, 83, .11);
+}
+.chapter-title > span { color: #8f5968; letter-spacing: .2em; }
+.chapter-title h3 { font-style: italic; }
+.chapter-title i { color: #ac7e86; }
+.photo-grid { perspective: 1200px; row-gap: clamp(2.5rem, 4vw, 4.6rem); }
+.photo-item { isolation: isolate; }
+.photo-item::before {
+  position: absolute;
+  z-index: -1;
+  top: .6rem;
+  right: -.5rem;
+  bottom: 1.6rem;
+  left: .7rem;
+  border: 1px solid rgba(100, 73, 68, .13);
+  content: "";
+  transform: rotate(1.1deg);
+  pointer-events: none;
+}
+.photo-item:nth-child(4n + 2)::before { transform: rotate(-1.3deg); }
 .photo-trigger {
   isolation: isolate;
   border: 0;
-  border-radius: .18rem;
-  background: #fffdfa;
-  box-shadow: .45rem .55rem 0 rgba(213, 181, 176, .3), 0 1rem 2.7rem rgba(56, 38, 42, .1);
+  border-radius: .08rem;
+  padding: clamp(.68rem, 1vw, .95rem);
+  background:
+    radial-gradient(circle at 20% 0, rgba(236, 214, 208, .28), transparent 45%),
+    #fffdf7;
+  box-shadow: .45rem .55rem 0 rgba(213, 181, 176, .34), 0 1rem 2.7rem rgba(56, 38, 42, .13);
   transform-style: preserve-3d;
   transition: transform .45s cubic-bezier(.2,.7,.2,1), box-shadow .45s ease;
 }
 .photo-trigger::before {
   position: absolute;
-  z-index: 2;
-  inset: .15rem;
+  z-index: 3;
+  inset: .1rem;
   content: "";
-  background: url("../images/ink-frame.svg") center / 100% 100% no-repeat;
-  opacity: .78;
+  background: url("../images/botanical-frame.svg") center / 100% 100% no-repeat;
+  opacity: .87;
   pointer-events: none;
 }
+.photo-trigger::after {
+  right: 1.35rem;
+  bottom: 1.35rem;
+  padding: .55rem .75rem;
+  border: 1px solid rgba(255, 253, 248, .8);
+  border-radius: .05rem;
+  content: "VIEW MEMORY ↗";
+  background: rgba(47, 37, 41, .82);
+  font-size: .55rem;
+  letter-spacing: .12em;
+}
+.photo-trigger img { position: relative; z-index: 1; border-radius: 0; box-shadow: 0 0 0 1px rgba(104, 73, 83, .1); }
+.photo-trigger:hover img { transform: translate3d(var(--photo-shift-x, 0px), var(--photo-shift-y, 0px), 16px) scale(1.035); }
 .photo-grid .photo-item:nth-child(3n + 1) .photo-trigger { transform: rotate(-.45deg); }
 .photo-grid .photo-item:nth-child(3n + 2) .photo-trigger { transform: rotate(.35deg); }
 .photo-grid .photo-item:nth-child(3n + 3) .photo-trigger { transform: rotate(-.2deg); }
@@ -135,8 +204,10 @@ body {
   transform: translateY(-.45rem) rotateX(var(--photo-tilt-x, 0deg)) rotateY(var(--photo-tilt-y, 0deg));
   box-shadow: .5rem .65rem 0 rgba(213, 181, 176, .4), 0 1.55rem 3.6rem rgba(56, 38, 42, .16);
 }
-.photo-item--cat .photo-trigger { box-shadow: .45rem .55rem 0 rgba(219, 197, 161, .55), 0 1rem 2.7rem rgba(56, 38, 42, .12); }
-.photo-item figcaption { padding-top: .9rem; color: var(--ink); font-size: 1.43rem; }
+.photo-item:nth-child(4n + 2) .photo-trigger { background: #fcf5ed; }
+.photo-item:nth-child(4n + 3) .photo-trigger { background: #f8eee9; }
+.photo-item--cat .photo-trigger { background: #fff7e9; box-shadow: .45rem .55rem 0 rgba(219, 197, 161, .55), 0 1rem 2.7rem rgba(56, 38, 42, .12); }
+.photo-item figcaption { padding-top: 1.05rem; color: var(--ink); font-family: var(--serif); font-size: clamp(1.15rem, 1.7vw, 1.55rem); font-style: italic; }
 .photo-item figcaption i { color: var(--rose-deep); }
 
 .song-section { background: #272126; }
@@ -145,21 +216,40 @@ body {
 .closing__seal::before, .closing__seal::after { border-color: rgba(104, 73, 83, .22); }
 .music-player { background: rgba(43, 36, 39, .95); }
 
-.lightbox { background: radial-gradient(circle at 50% 18%, rgba(149, 98, 116, .19), transparent 55%), #211c20; }
-.lightbox__figure img { border: .45rem solid #fffaf2; border-radius: .25rem; box-shadow: 0 2.5rem 6rem rgba(0, 0, 0, .35); }
+.lightbox { background: radial-gradient(circle at 50% 18%, rgba(149, 98, 116, .2), transparent 55%), #211c20; }
+.lightbox__mat {
+  position: relative;
+  max-width: min(100%, 72rem);
+  padding: .65rem;
+  background: #fffaf2;
+  box-shadow: .5rem .6rem 0 rgba(219, 197, 161, .2), 0 2.5rem 6rem rgba(0, 0, 0, .35);
+}
+.lightbox__mat::after {
+  position: absolute;
+  inset: .12rem;
+  content: "";
+  background: url("../images/botanical-frame.svg") center / 100% 100% no-repeat;
+  pointer-events: none;
+}
+.lightbox__figure img { display: block; max-width: 100%; border: 0; border-radius: 0; box-shadow: none; }
 .lightbox__meta { padding-top: .3rem; }
+.lightbox__meta strong { font-size: 1.1rem; }
 
 @media (max-width: 820px) {
   .lightbox__nav--previous { grid-column: 1; grid-row: 2; }
   .lightbox__nav--next { grid-column: 2; grid-row: 2; }
+  .photo-heading::before { margin-left: 0; }
 }
 
 @media (max-width: 520px) {
   .love-letter::before { inset: 0; }
-  .opening__portrait { padding: .55rem .55rem 3rem; }
-  .photo-trigger::before { inset: .08rem; }
+  .opening__portrait { padding: .65rem .65rem 3rem; }
+  .photo-trigger { padding: .5rem; }
+  .photo-trigger::before { inset: .03rem; }
+  .photo-item::before { right: -.25rem; left: .35rem; }
+  .photo-item figcaption { padding-top: .65rem; font-size: 1.08rem; }
   .photo-chapter--soft { padding: 2.4rem 1rem; }
-  .lightbox__figure img { border-width: .25rem; }
+  .lightbox__mat { padding: .35rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
